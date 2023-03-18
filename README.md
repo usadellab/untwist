@@ -107,7 +107,24 @@ Detailed instructions for `plink` are in the file
 queued jobs for the previous filtering and merging with 
 `qsub -hold_jid 9947679 methods/filter_merged_public_and_untwist_vcf.sh`.
 
-### Principal Component Analysis and k-means clustering
+This step produces
+`results/public_and_untwist_bcftools_and_plink_filtered.[log|nosex|vcf.gz]`.
+
+### Principal Component Analysis
 
 We use `plink` (version 1.9) to carry out a principal component analysis of the
 SNP variants.
+
+Find the `plink` instructions in File
+`./methods/principal_component_analysis.sh`. Submitted to our job-queue with
+`qsub methods/principal_component_analysis.sh`.
+
+This step produces
+`./results/public_and_untwist_bcftools_and_plink_filtered_pca_matrix.*`
+
+Note that the transposed coordinate matrix for the accessions are in file
+`results/public_and_untwist_bcftools_and_plink_filtered_pca_matrix.rel` and the
+row, i.e. the accession names are in file
+`results/public_and_untwist_bcftools_and_plink_filtered_pca_matrix.rel.id`.
+
+#### k-means clustering
