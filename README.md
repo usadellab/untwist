@@ -88,4 +88,4 @@ Using `plink` (version 1.9) we apply the following filter criteria:
 Detailed instructions for `plink` are in the file 
 `methods/filter_merged_public_and_untwist_vcf.sh`. Submitted, awaiting
 queued jobs for the previous filtering and merging with 
-`
+`qsub -hold_jid 9947679 methods/filter_merged_public_and_untwist_vcf.sh`.
