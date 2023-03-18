@@ -19,7 +19,7 @@ cd ${DIR}
 # For documentation, please see
 # https://www.cog-genomics.org/plink/1.9/strat
 # (last accessed 03/18/23)
-/mnt/bin/plink/plink_1.9/plink --threads 20 --double-id --allow-extra-chr --vcf results/public_and_untwist_bcftools_and_plink_filtered.vcf.gz --pca 20 header tabs var-wts --make-rel square --out results/public_and_untwist_bcftools_and_plink_filtered_pca_matrix;
+/mnt/bin/plink/plink_1.9/plink --threads 20 --double-id --allow-extra-chr --vcf results/public_and_untwist_bcftools_and_plink_filtered.vcf.gz --pca 20 header tabs var-wts --make-rel square --out results/public_and_untwist_bcftools_and_plink_filtered_pca;
 
 echo "**** Job ends ****"
 date

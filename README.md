@@ -127,6 +127,26 @@ Note that the transposed coordinate matrix for the accessions are in file
 row, i.e. the accession names are in file
 `results/public_and_untwist_bcftools_and_plink_filtered_pca_matrix.rel.id`.
 
+#### Complete Linkage Clustering based on identity by state (IBS) distances
+
+This clustering is carried out using `plink` (version 1.9).
+
+See the script `./methods/complete_linkage_clustering.sh` which was submitted
+to our job-queue.
+
+This step produces the following result files:
+```sh
+./results/public_and_untwist_bcftools_and_plink_filtered_complete_linkage_clustering.cluster1
+./results/public_and_untwist_bcftools_and_plink_filtered_complete_linkage_clustering.cluster2
+./results/public_and_untwist_bcftools_and_plink_filtered_complete_linkage_clustering.cluster3
+./results/public_and_untwist_bcftools_and_plink_filtered_complete_linkage_clustering.log
+./results/public_and_untwist_bcftools_and_plink_filtered_complete_linkage_clustering.nosex
+```
+
+Note that the clusters are contained in file `...cluster1`, one cluster per
+line separated by the cluster name a `<TAB>` and the cluster members comma
+separated.
+
 #### k-means clustering
 
 k-means clustering was executed in `R` using the script `methods/k_means_clustering.R`.
