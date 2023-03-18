@@ -110,24 +110,7 @@ queued jobs for the previous filtering and merging with
 This step produces
 `results/public_and_untwist_bcftools_and_plink_filtered.[log|nosex|vcf.gz]`.
 
-### Principal Component Analysis
-
-We use `plink` (version 1.9) to carry out a principal component analysis of the
-SNP variants.
-
-Find the `plink` instructions in File
-`./methods/principal_component_analysis.sh`. Submitted to our job-queue with
-`qsub methods/principal_component_analysis.sh`.
-
-This step produces
-`./results/public_and_untwist_bcftools_and_plink_filtered_pca_matrix.*`
-
-Note that the transposed coordinate matrix for the accessions are in file
-`results/public_and_untwist_bcftools_and_plink_filtered_pca_matrix.rel` and the
-row, i.e. the accession names are in file
-`results/public_and_untwist_bcftools_and_plink_filtered_pca_matrix.rel.id`.
-
-#### Complete Linkage Clustering based on identity by state (IBS) distances
+### Complete Linkage Clustering based on identity by state (IBS) distances
 
 This clustering is carried out using `plink` (version 1.9).
 
@@ -146,6 +129,23 @@ This step produces the following result files:
 Note that the clusters are contained in file `...cluster1`, one cluster per
 line separated by the cluster name a `<TAB>` and the cluster members comma
 separated.
+
+### Principal Component Analysis
+
+We use `plink` (version 1.9) to carry out a principal component analysis of the
+SNP variants.
+
+Find the `plink` instructions in File
+`./methods/principal_component_analysis.sh`. Submitted to our job-queue with
+`qsub methods/principal_component_analysis.sh`.
+
+This step produces
+`./results/public_and_untwist_bcftools_and_plink_filtered_pca_matrix.*`
+
+Note that the transposed coordinate matrix for the accessions are in file
+`results/public_and_untwist_bcftools_and_plink_filtered_pca_matrix.rel` and the
+row, i.e. the accession names are in file
+`results/public_and_untwist_bcftools_and_plink_filtered_pca_matrix.rel.id`.
 
 #### k-means clustering
 
