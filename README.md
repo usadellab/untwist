@@ -128,3 +128,22 @@ row, i.e. the accession names are in file
 `results/public_and_untwist_bcftools_and_plink_filtered_pca_matrix.rel.id`.
 
 #### k-means clustering
+
+k-means clustering was executed in `R` using the script `methods/k_means_clustering.R`.
+
+The best number of clusters was found using the elbow and the silhouette
+methods (see the respective plots).
+
+Currently, this produces just plots, as the results hint that the original
+input data needs refinement.
+
+Scatterplots of for _k_=4 and _k_=6 were produced.
+
+Plots generated:
+```sh
+results/hclust_tree.pdf
+results/k_means_elbow_plot.pdf
+results/k_means_scatterplot_k=4.pdf
+results/k_means_scatterplot_k=6.pdf
+results/k_means_silhoutte_plot.pdf
+```
