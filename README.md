@@ -2,6 +2,23 @@
 
 Usadellab's contributions to the Untwist project.
 
+## Location on the IBG-4 cluster
+
+Go to `/mnt/data/asis/untwist` to find the local clone of this repository.
+
+## Directory structure
+
+This project has the following directory structure:
+```sh
+- material
+- methods
+- results
+```
+
+Note that `material` and `results` are ignored by git, because they contain
+sensitive data and extremely large files. You'll find the files in the local
+clone.
+
 ## Population Structure Analysis
 
 Identification of populations and assignment to them of public and Untwist
