@@ -3,8 +3,27 @@
 Usadellab's contributions to the Untwist project.
 
 ## Location on the IBG-4 cluster
+/mnt/data/achraf/sequenced_samples/runs/pipe_20210803_UNTWIST/020_SelectVariants-c-CAM_casom_CAMPUB223_54UNT-snps-DP10FORMAT-hom-maf-geno  
+7d0cd0ed7184f080dcdcc3fa5905c333  NC_all_gatk_CAM_casom_CAMPUB223_54UNT_snpsonly-DP10FORMAT-hom_maf_geno_vcisnotfiltered.vcf  
+
+Ata 
+/mnt/data/ata/CAMPUB
+UNT54-CAMPUB.merged2.vcf.gz 0dbed9a97c4891ded9fef09bcba8a1e8
+size uncompressed 19629699072 wc-c ca 19.2 GB
+uncompressed md5 cdc839d8604266162e2f1c9b70158956 
+
+/mnt/data/ata/UNTWIST_NEW/vcfFiltered/Merge1
+UNT54.bam.vcf.merged2.gz
+has both original and reseq runs
+
+UNT54.raw.merged.vcf.gz
+seems to only have reseq samples
 
 Go to `/mnt/data/asis/untwist` to find the local clone of this repository.
+
+##Files
+achraf
+
 
 ## Directory structure
 
