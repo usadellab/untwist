@@ -18,11 +18,11 @@ DIR=/mnt/data/asis/untwist
 cd ${DIR}
 
 # First we need to index the two to be merged VCF files:
-/mnt/bin/bcftools/bcftools-1.9/bcftools index -f results/NC_all_gatk_CAMPUB223_snpsonly_bcftools_filtered.vcf.gz --threads 20;
-/mnt/bin/bcftools/bcftools-1.9/bcftools index -f results/UNT54.raw.merge_bcftools_filtered.vcf.gz --threads 20;
+/mnt/bin/bcftools/bcftools-1.9/bcftools index -f results/NC_all_gatk_CAM_casom_CAMPUB223_54UNT_bcftools_filtered.vcf.gz --threads 20;
+/mnt/bin/bcftools/bcftools-1.9/bcftools index -f results/NC_all_gatk_UNT_check_snps_all_reseq_bcftools_filtered.vcf.gz --threads 20;
 
 # Now we can merge them:
-/mnt/bin/bcftools/bcftools-1.9/bcftools merge --merge all -l methods/vcfList.txt --missing-to-ref -Oz -o results/public_and_untwist_bcftools_filtered.vcf.gz --threads 20;
+/mnt/bin/bcftools/bcftools-1.9/bcftools merge --merge all -l methods/vcfList.txt -Oz -o results/public_and_untwist_bcftools_filtered.vcf.gz --threads 20;
 
 echo "**** Job ends ****"
 date

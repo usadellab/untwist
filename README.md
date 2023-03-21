@@ -89,26 +89,31 @@ The `bcftools` instructions are in file `methods/filter_public_variants.sh`.
 The file was submitted to our job queue using
 `qsub methods/filter_public_variants.sh`
 
-This step produces `results/NC_all_gatk_CAMPUB223_snpsonly_bcftools_filtered.vcf.gz`.
+This step produces
+`results/NC_all_gatk_CAM_casom_CAMPUB223_54UNT_bcftools_filtered.vcf.gz`.
 
 ##### Filter Untwist data
+
+Note that in this step we additionally _exclude_ all `UNT_[0-9]+` accessions
+that were identified in the above step "Exclude doubly appearing accessions".
 
 The `bcftools` instructions are in file `methods/filter_untwist_variants.sh`.
 The file was submitted to our job queue using
 `qsub methods/filter_untwist_variants.sh`
 
-This step produces `results/UNT54.raw.merge_bcftools_filtered.vcf.gz`.
+This step produces
+`results/NC_all_gatk_UNT_check_snps_all_reseq_bcftools_filtered.vcf.gz`.
 
 ##### Merge filtered public and Untwist SNP variants
 
 We use `bcftools merge`, find the detailed instructions in file
 `methods/merge_public_and_untwist_vcfs.sh`. Submitted to our job queue using
-`qsub -hold_jid 9947675 methods/merge_public_and_untwist_vcfs.sh` Note that
+`qsub -hold_jid <id-of-job> methods/merge_public_and_untwist_vcfs.sh` Note that
 using `-hold_jid <ID of job>` the newly submitted job will only start when the
 other job finished. Filtering the Untwist data was still running.
 
-It is important to note, that we use the `--missing-to-ref` flag, which causes
-genotypes at missing sites to be interpreted as `0/0`.
+It is important to note, that we do _not_ use the `--missing-to-ref` flag,
+which causes genotypes at missing sites to be interpreted as `0/0`.
 
 This step produces `results/public_and_untwist_bcftools_filtered.vcf.gz`.
 
@@ -117,16 +122,18 @@ This step produces `results/public_and_untwist_bcftools_filtered.vcf.gz`.
 We want to filter the merged SNP Variant Matrix
 `results/public_and_untwist_bcftools_filtered.vcf.gz` further.
 Using `plink` (version 1.9) we apply the following filter criteria:
-- discard SNPs that are not in Hardy-Weinberg-Equilibrium 
 - discard SNPs that are not bi-allelic
 - discard SNPs that have a minor allele frequency (MAF) <= 0.05
 - discard SNPs that have '0/.' and similar VCF GT values; treat them as
   missing.
 
+Currently, we do _not_ apply filters that
+- discard SNPs that are not in Hardy-Weinberg-Equilibrium 
+
 Detailed instructions for `plink` are in the file 
 `methods/filter_merged_public_and_untwist_vcf.sh`. Submitted, awaiting
 queued jobs for the previous filtering and merging with 
-`qsub -hold_jid 9947679 methods/filter_merged_public_and_untwist_vcf.sh`.
+`qsub -hold_jid <id-of-job> methods/filter_merged_public_and_untwist_vcf.sh`.
 
 This step produces
 `results/public_and_untwist_bcftools_and_plink_filtered.[log|nosex|vcf.gz]`.
