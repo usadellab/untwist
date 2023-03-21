@@ -31,29 +31,50 @@ Camelina accessions is the goal of this sub-project.
 We obtain single nucleotide polymorphism from Ashraf's previous work. The data
 is delivered in VCF format and found here:
 ```sh
-/mnt/data/achraf/sequenced_samples/runs/pipe_20210803_UNTWIST/015_SelectVariants-c-CAMPUB223_SNPS/NC_all_gatk_CAMPUB223_snpsonly.vcf
+/mnt/data/achraf/sequenced_samples/runs/pipe_20210803_UNTWIST/013_gathervcfs_c-CAM_casom_CAMPUB223_54UNT/NC_all_gatk_CAM_casom_CAMPUB223_54UNT.vcf
 ```
 Note that this data has been filtered to contain only SNPs and no insertions or
 deletions (InDels).
 
-Find a symbolic link to this public data in `material`.
+Find a symbolic link to this public data and its index `[...].idx` in
+`material`.
 
 #### Untwist data
 
-This is obtained as a raw variant calling result file provided by Ata Ul
-Haleem. The data is delivered in VCF format (gzip) and is found here:
+This is obtained as a raw variant calling result file provided by Ashraf. The
+data is delivered in VCF format (gzip) and is found here:
 ```sh
-/mnt/sftpdata/sftpuntwist/home/sftpuntwist/UNT_Ata/VcfDataOctopus/UNT54.raw.merged.vcf.gz
+/mnt/data/achraf/sequenced_samples/runs/pipe_20210803_UNTWIST/015_SelectVariants-UNT-check-snps-all-reseq/NC_all_gatk_UNT_check_snps_all_reseq.vcf
 ```
-Note that this data still needs to be filtered to remove InDels.
 
-Find a copy of the file in material. `/mnt/sftpdata` is not available on the
-compute nodes, so we need the original here.
+Find a symbolic link to this public data and its index `[...].idx` in
+`material`.
 
 ### Methods
 
 This section describes step by step how the above material is processed to
 identify populations and assign accessions to them.
+
+#### Merging of public and Untwist variant data
+
+##### Exclude doubly appearing accessions
+
+Both the above public and Untwist variant data matrices (VCF files) contain
+some `UNT` accessions that need to be excluded from one file, before merging.
+One example of these accessions, that appear in both files is `UNT_001`.
+
+We thus exclude all accessions that 
+- have an identifier starting with `UNT` and 
+- that appear in the public VCF file
+from the Untwist VCF file.
+
+The procedure is documented and implemented in method script:
+```sh
+./methods/filter_Untwist_vcf_drop_UNT_accessions_present_in_public_vcf.sh
+```
+
+All to be excluded `UNT_[0-9]+` accession identifier are stored in file
+`./results/NC_all_gatk_CAM_casom_CAMPUB223_54UNT_accessions_to_exclude.txt`.
 
 #### Filtering of variant data
 
