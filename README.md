@@ -262,6 +262,14 @@ Note, that the `[...].dist` files contain the allele count based distance and
 row names (`[...].dist.id`) information. The `[...].mdist` and `[...].mdist.id`
 files contain the same but for IBS distances.
 
+The clustering and visualization is done with the R-script
+`./methods/ibs_allele_cnt_distance_clustering_for_ata.R`. It produces these
+results:
+```
+./results/hclust_on_1_min_IBS_tree_for_ata.pdf
+./results/hclust_on_allele_cnts_tree_for_ata.pdf
+```
+
 ### Principal Component Analysis
 
 We use `plink` (version 1.9) to carry out a principal component analysis of the
