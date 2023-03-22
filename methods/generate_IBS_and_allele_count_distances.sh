@@ -17,7 +17,7 @@ DIR=/mnt/data/asis/untwist/results
 cd ${DIR}
 
 # Apply the filtering and write a bed-file:
-/mnt/bin/plink/plink_1.9/plink --vcf all_public_and_all_untwist_SNP_filtered.vcf.gz --out all_public_and_all_untwist_SNP_filtered --distance 1-ibs allele-ct --allow-extra-chr --double-id;
+/mnt/bin/plink/plink_1.9/plink --threads 20 --vcf all_public_and_all_untwist_SNP_filtered.vcf.gz --out all_public_and_all_untwist_SNP_filtered --distance square 1-ibs allele-ct --allow-extra-chr --double-id;
 
 echo "**** Job ends ****"
 date
