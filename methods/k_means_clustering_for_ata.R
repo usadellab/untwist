@@ -66,9 +66,9 @@ dev.off()
 unt_good_ks <- c(3, 9)
 unt_pchs <- unlist(lapply(rownames(unt_coords), function(accession_id) {
   if (grepl("^UNT", accession_id)) {
-    15
+    22
   } else {
-    19
+    21
   }
 }))
 for (i in unt_good_ks) {
@@ -79,7 +79,7 @@ for (i in unt_good_ks) {
     pch = unt_pchs,
     col = kmeans_res$cluster
   )
-  legend("topright", legend=c("Untwist", "Public"), pch = c(15, 19))
+  legend("topright", legend=c("Untwist", "Public"), pch = c(22, 21))
   # text(x = unt_coords[, 1], y = unt_coords[, 2],
   # labels=rownames(unt_coords), col=kmeans_res$cluster)
   dev.off()
