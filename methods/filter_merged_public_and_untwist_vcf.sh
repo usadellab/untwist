@@ -17,7 +17,12 @@ DIR=/mnt/data/asis/untwist
 cd ${DIR}
 
 # Apply the filtering and write a bed-file:
-/mnt/bin/plink/plink_1.9/plink --vcf results/public_and_untwist_bcftools_filtered.vcf.gz --recode vcf bgz --out results/public_and_untwist_bcftools_and_plink_filtered --allow-extra-chr --maf 0.05 --biallelic-only --hwe 0.001 --double-id --vcf-half-call m;
+/mnt/bin/plink/plink_1.9/plink --vcf results/public_and_untwist_bcftools_filtered.vcf.gz --recode vcf bgz --out results/public_and_untwist_bcftools_and_plink_filtered --allow-extra-chr --maf 0.05 --biallelic-only --double-id --vcf-half-call m --mind 0.1;
+
+# The following is an alternative command that also applies a filter to discard
+# SNPs that are not in Hardy-Weinberg-Equilibrium:
+#
+#/mnt/bin/plink/plink_1.9/plink --vcf results/public_and_untwist_bcftools_filtered.vcf.gz --recode vcf bgz --out results/public_and_untwist_bcftools_and_plink_filtered --allow-extra-chr --maf 0.05 --biallelic-only --hwe 0.001 --double-id --vcf-half-call m;
 
 echo "**** Job ends ****"
 date

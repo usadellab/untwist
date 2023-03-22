@@ -31,29 +31,50 @@ Camelina accessions is the goal of this sub-project.
 We obtain single nucleotide polymorphism from Ashraf's previous work. The data
 is delivered in VCF format and found here:
 ```sh
-/mnt/data/achraf/sequenced_samples/runs/pipe_20210803_UNTWIST/015_SelectVariants-c-CAMPUB223_SNPS/NC_all_gatk_CAMPUB223_snpsonly.vcf
+/mnt/data/achraf/sequenced_samples/runs/pipe_20210803_UNTWIST/013_gathervcfs_c-CAM_casom_CAMPUB223_54UNT/NC_all_gatk_CAM_casom_CAMPUB223_54UNT.vcf
 ```
 Note that this data has been filtered to contain only SNPs and no insertions or
 deletions (InDels).
 
-Find a symbolic link to this public data in `material`.
+Find a symbolic link to this public data and its index `[...].idx` in
+`material`.
 
 #### Untwist data
 
-This is obtained as a raw variant calling result file provided by Ata Ul
-Haleem. The data is delivered in VCF format (gzip) and is found here:
+This is obtained as a raw variant calling result file provided by Ashraf. The
+data is delivered in VCF format (gzip) and is found here:
 ```sh
-/mnt/sftpdata/sftpuntwist/home/sftpuntwist/UNT_Ata/VcfDataOctopus/UNT54.raw.merged.vcf.gz
+/mnt/data/achraf/sequenced_samples/runs/pipe_20210803_UNTWIST/015_SelectVariants-UNT-check-snps-all-reseq/NC_all_gatk_UNT_check_snps_all_reseq.vcf
 ```
-Note that this data still needs to be filtered to remove InDels.
 
-Find a copy of the file in material. `/mnt/sftpdata` is not available on the
-compute nodes, so we need the original here.
+Find a symbolic link to this public data and its index `[...].idx` in
+`material`.
 
 ### Methods
 
 This section describes step by step how the above material is processed to
 identify populations and assign accessions to them.
+
+#### Merging of public and Untwist variant data
+
+##### Exclude doubly appearing accessions
+
+Both the above public and Untwist variant data matrices (VCF files) contain
+some `UNT` accessions that need to be excluded from one file, before merging.
+One example of these accessions, that appear in both files is `UNT_001`.
+
+We thus exclude all accessions that 
+- have an identifier starting with `UNT` and 
+- that appear in the public VCF file
+from the Untwist VCF file.
+
+The procedure is documented and implemented in method script:
+```sh
+./methods/filter_Untwist_vcf_drop_UNT_accessions_present_in_public_vcf.sh
+```
+
+All to be excluded `UNT_[0-9]+` accession identifier are stored in file
+`./results/NC_all_gatk_CAM_casom_CAMPUB223_54UNT_accessions_to_exclude.txt`.
 
 #### Filtering of variant data
 
@@ -68,26 +89,31 @@ The `bcftools` instructions are in file `methods/filter_public_variants.sh`.
 The file was submitted to our job queue using
 `qsub methods/filter_public_variants.sh`
 
-This step produces `results/NC_all_gatk_CAMPUB223_snpsonly_bcftools_filtered.vcf.gz`.
+This step produces
+`results/NC_all_gatk_CAM_casom_CAMPUB223_54UNT_bcftools_filtered.vcf.gz`.
 
 ##### Filter Untwist data
+
+Note that in this step we additionally _exclude_ all `UNT_[0-9]+` accessions
+that were identified in the above step "Exclude doubly appearing accessions".
 
 The `bcftools` instructions are in file `methods/filter_untwist_variants.sh`.
 The file was submitted to our job queue using
 `qsub methods/filter_untwist_variants.sh`
 
-This step produces `results/UNT54.raw.merge_bcftools_filtered.vcf.gz`.
+This step produces
+`results/NC_all_gatk_UNT_check_snps_all_reseq_bcftools_filtered.vcf.gz`.
 
 ##### Merge filtered public and Untwist SNP variants
 
 We use `bcftools merge`, find the detailed instructions in file
 `methods/merge_public_and_untwist_vcfs.sh`. Submitted to our job queue using
-`qsub -hold_jid 9947675 methods/merge_public_and_untwist_vcfs.sh` Note that
+`qsub -hold_jid <id-of-job> methods/merge_public_and_untwist_vcfs.sh` Note that
 using `-hold_jid <ID of job>` the newly submitted job will only start when the
 other job finished. Filtering the Untwist data was still running.
 
-It is important to note, that we use the `--missing-to-ref` flag, which causes
-genotypes at missing sites to be interpreted as `0/0`.
+It is important to note, that we do _not_ use the `--missing-to-ref` flag,
+which causes genotypes at missing sites to be interpreted as `0/0`.
 
 This step produces `results/public_and_untwist_bcftools_filtered.vcf.gz`.
 
@@ -96,19 +122,41 @@ This step produces `results/public_and_untwist_bcftools_filtered.vcf.gz`.
 We want to filter the merged SNP Variant Matrix
 `results/public_and_untwist_bcftools_filtered.vcf.gz` further.
 Using `plink` (version 1.9) we apply the following filter criteria:
-- discard SNPs that are not in Hardy-Weinberg-Equilibrium 
 - discard SNPs that are not bi-allelic
 - discard SNPs that have a minor allele frequency (MAF) <= 0.05
 - discard SNPs that have '0/.' and similar VCF GT values; treat them as
   missing.
 
+Currently, we do _not_ apply filters that
+- discard SNPs that are not in Hardy-Weinberg-Equilibrium 
+
 Detailed instructions for `plink` are in the file 
 `methods/filter_merged_public_and_untwist_vcf.sh`. Submitted, awaiting
 queued jobs for the previous filtering and merging with 
-`qsub -hold_jid 9947679 methods/filter_merged_public_and_untwist_vcf.sh`.
+`qsub -hold_jid <id-of-job> methods/filter_merged_public_and_untwist_vcf.sh`.
 
 This step produces
 `results/public_and_untwist_bcftools_and_plink_filtered.[log|nosex|vcf.gz]`.
+
+### Complete Linkage Clustering based on identity by state (IBS) distances
+
+This clustering is carried out using `plink` (version 1.9).
+
+See the script `./methods/complete_linkage_clustering.sh` which was submitted
+to our job-queue.
+
+This step produces the following result files:
+```sh
+./results/public_and_untwist_bcftools_and_plink_filtered_complete_linkage_clustering.cluster1
+./results/public_and_untwist_bcftools_and_plink_filtered_complete_linkage_clustering.cluster2
+./results/public_and_untwist_bcftools_and_plink_filtered_complete_linkage_clustering.cluster3
+./results/public_and_untwist_bcftools_and_plink_filtered_complete_linkage_clustering.log
+./results/public_and_untwist_bcftools_and_plink_filtered_complete_linkage_clustering.nosex
+```
+
+Note that the clusters are contained in file `...cluster1`, one cluster per
+line separated by the cluster name a `<TAB>` and the cluster members comma
+separated.
 
 ### Principal Component Analysis
 

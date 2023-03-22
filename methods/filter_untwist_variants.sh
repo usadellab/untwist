@@ -19,7 +19,7 @@ cd ${DIR}
 # For documentation, please see
 # https://samtools.github.io/bcftools/howtos/filtering.html
 # (last accessed 03/18/23)
-/mnt/bin/bcftools/bcftools-1.9/bcftools view --threads 20 -v snps -i 'QUAL>20 && FORMAT/DP>3' -O z -o results/UNT54.raw.merge_bcftools_filtered.vcf.gz material/UNT54.raw.merged.vcf.gz;
+/mnt/bin/bcftools/bcftools-1.9/bcftools view --threads 20 -s "^$(cat ./results/NC_all_gatk_CAM_casom_CAMPUB223_54UNT_accessions_to_exclude.txt)" -i 'QUAL>20 && FORMAT/DP>3' -O z -o results/NC_all_gatk_UNT_check_snps_all_reseq_bcftools_filtered.vcf.gz ./material/NC_all_gatk_UNT_check_snps_all_reseq.vcf;
 
 echo "**** Job ends ****"
 date
