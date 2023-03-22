@@ -1,4 +1,5 @@
 material/*
 results/*
+!results/*.pdf
 *.err
 *.out

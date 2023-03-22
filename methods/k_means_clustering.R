@@ -79,5 +79,5 @@ for (i in unt_good_ks) {
 #' hclust
 unt_hclust <- hclust(dist(unt_coords), method = "average")
 pdf("./results/hclust_tree.pdf", width = 21, height = 7)
-plot(unt_hclust)
+plot(unt_hclust, cex=0.5)
 dev.off()
