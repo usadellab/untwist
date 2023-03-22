@@ -62,11 +62,11 @@ plot(k_range, unt_k_means_sil,
 dev.off()
 
 # Visual inspection and an educated interpretation yields
-# that k=4 and k=6 are good cluster numbers
-unt_good_ks <- c(4, 6)
+# that k=3 and k=10 are good cluster numbers
+unt_good_ks <- c(3, 10)
 for (i in unt_good_ks) {
   pdf(paste0("./results/k_means_scatterplot_k=", i, "_for_ata.pdf"))
-  kmeans_res <- unt_k_means[[i]]
+  kmeans_res <- unt_k_means[[toString(i)]]
   plot(
     x = unt_coords[, 1], y = unt_coords[, 2], type = "p", pch = ".",
     col = kmeans_res$cluster

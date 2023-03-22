@@ -66,7 +66,7 @@ dev.off()
 unt_good_ks <- c(4, 6)
 for (i in unt_good_ks) {
   pdf(paste0("./results/k_means_scatterplot_k=", i, ".pdf"))
-  kmeans_res <- unt_k_means[[i]]
+  kmeans_res <- unt_k_means[[toString(i)]]
   plot(
     x = unt_coords[, 1], y = unt_coords[, 2], type = "p", pch = ".",
     col = kmeans_res$cluster
