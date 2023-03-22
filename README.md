@@ -1,6 +1,20 @@
 # untwist
 
 Usadellab's contributions to the Untwist project.
+## Raw data 
+Can not be changed nor moved  
+In /mnt/archive/sequencing/illumina  
+
+20210803_UNTWIST  
+20211115_Untwist_check  
+2022_02_12_Csativa_UNTWIST_reseq  
+
++UNTWIST original run; we detected a likely mixup  
+
+;UNTWIST check (new and old ) material sent to a differnt provider : old same DNA sample; new : new DNA extraction 
+
+2022_02_12_Csativa_UNTWIST_reseq the resequencing data which does not comprise all some as some original data made sense  
+
 
 ## Location on the IBG-4 cluster
 
