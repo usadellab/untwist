@@ -1,0 +1,12 @@
+OLD old data that was sent to Admera
+NEW new extraction 
+UNT19-new_R1_001.fastq.gz      UNT20-new_R2_001.fastq.gz      UNT21-old_R1_001.fastq.gz      UNT25-old_R2_001.fastq.gz      UNT38-new_R1_001.fastq.gz
+UNT19-new_R1_001.fastq.gz.md5  UNT20-new_R2_001.fastq.gz.md5  UNT21-old_R1_001.fastq.gz.md5  UNT25-old_R2_001.fastq.gz.md5  UNT38-new_R1_001.fastq.gz.md5
+UNT19-new_R2_001.fastq.gz      UNT20-old_R1_001.fastq.gz      UNT21-old_R2_001.fastq.gz      UNT27-new_R1_001.fastq.gz      UNT38-new_R2_001.fastq.gz
+UNT19-new_R2_001.fastq.gz.md5  UNT20-old_R1_001.fastq.gz.md5  UNT21-old_R2_001.fastq.gz.md5  UNT27-new_R1_001.fastq.gz.md5  UNT38-new_R2_001.fastq.gz.md5
+UNT19-old_R1_001.fastq.gz      UNT20-old_R2_001.fastq.gz      UNT25-new_R1_001.fastq.gz      UNT27-new_R2_001.fastq.gz      UNT38-old_R1_001.fastq.gz
+UNT19-old_R1_001.fastq.gz.md5  UNT20-old_R2_001.fastq.gz.md5  UNT25-new_R1_001.fastq.gz.md5  UNT27-new_R2_001.fastq.gz.md5  UNT38-old_R1_001.fastq.gz.md5
+UNT19-old_R2_001.fastq.gz      UNT21-new_R1_001.fastq.gz      UNT25-new_R2_001.fastq.gz      UNT27-old_R1_001.fastq.gz      UNT38-old_R2_001.fastq.gz
+UNT19-old_R2_001.fastq.gz.md5  UNT21-new_R1_001.fastq.gz.md5  UNT25-new_R2_001.fastq.gz.md5  UNT27-old_R1_001.fastq.gz.md5  UNT38-old_R2_001.fastq.gz.md5
+UNT20-new_R1_001.fastq.gz      UNT21-new_R2_001.fastq.gz      UNT25-old_R1_001.fastq.gz      UNT27-old_R2_001.fastq.gz
+UNT20-new_R1_001.fastq.gz.md5  UNT21-new_R2_001.fastq.gz.md5  UNT25-old_R1_001.fastq.gz.md5  UNT27-old_R2_001.fastq.gz.md5
