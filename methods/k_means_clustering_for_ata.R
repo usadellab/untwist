@@ -23,9 +23,9 @@ rownames(unt_coords) <- unt_accession_names
 
 #' k-means clustering
 k_range <- 3:10
-unt_k_means <- lapply(k_range, function(k) {
+unt_k_means <- setNames(lapply(k_range, function(k) {
   kmeans(unt_coords, centers = k, nstart = 25)
-})
+}), as.character(k_range))
 
 #' Elbow method generates a plot of the total sum of squares of clusters
 #' variation, plots it and finds the bend "elbow" at the optimal k in the curve.
