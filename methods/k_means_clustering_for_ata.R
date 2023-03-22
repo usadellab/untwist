@@ -77,11 +77,12 @@ for (i in unt_good_ks) {
   plot(
     x = unt_coords[, 1], y = unt_coords[, 2], type = "p", 
     pch = unt_pchs,
-    col = kmeans_res$cluster
+    col = kmeans_res$cluster,
+    main=paste0("k-means clustering result for k=",i),
+    xlab = "1st principal component",
+    ylab = "2nd principal component"
   )
   legend("topright", legend=c("Untwist", "Public"), pch = c(22, 21))
-  # text(x = unt_coords[, 1], y = unt_coords[, 2],
-  # labels=rownames(unt_coords), col=kmeans_res$cluster)
   dev.off()
 }
 
