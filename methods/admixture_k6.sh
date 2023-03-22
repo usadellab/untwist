@@ -1,8 +1,8 @@
 #!/bin/bash
 #$ -l mem_free=1G,h_vmem=1G       
 #$ -pe smp 60
-#$ -e /mnt/data/asis/untwist/methods/admixture_k3_torque.err
-#$ -o /mnt/data/asis/untwist/methods/admixture_k3_torque.out
+#$ -e /mnt/data/asis/untwist/methods/admixture_k6_torque.err
+#$ -o /mnt/data/asis/untwist/methods/admixture_k6_torque.out
 
 echo "**** Job starts ****"              
 date
@@ -22,7 +22,7 @@ cd ${DIR}
 FILE=all_public_and_all_untwist_SNP_filtered
 
 # Try the following number of populations:
-i=3
+i=6
 /mnt/data/asis/software/dist/admixture_linux-1.3.0/admixture -j60 --cv $FILE.bed $i > ${FILE}_admixture_k${i}.out
 
 # Print the cross validation performance for each of the above runs:

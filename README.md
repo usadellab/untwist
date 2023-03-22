@@ -229,18 +229,38 @@ submitted to our job-queue.
 
 This step produces the following result files:
 ```sh
-./results/public_and_untwist_bcftools_and_plink_filtered_complete_linkage_clustering.cluster1
-./results/public_and_untwist_bcftools_and_plink_filtered_complete_linkage_clustering.cluster2
-./results/public_and_untwist_bcftools_and_plink_filtered_complete_linkage_clustering.cluster3
-./results/public_and_untwist_bcftools_and_plink_filtered_complete_linkage_clustering.log
-./results/public_and_untwist_bcftools_and_plink_filtered_complete_linkage_clustering.nosex
+./results/all_public_and_all_untwist_SNP_filtered_complete_linkage_clustering.cluster1
+./results/all_public_and_all_untwist_SNP_filtered_complete_linkage_clustering.cluster2
+./results/all_public_and_all_untwist_SNP_filtered_complete_linkage_clustering.cluster3
+./results/all_public_and_all_untwist_SNP_filtered_complete_linkage_clustering.log
+./results/all_public_and_all_untwist_SNP_filtered_complete_linkage_clustering.nosex
 ```
 
 Note that the clusters are contained in file `...cluster1`, one cluster per
 line separated by the cluster name a `<TAB>` and the cluster members comma
 separated.
 
+### Identity by state (IBS) distance based clustering
 
+IBS is a standard distance measure between two accessions. We use `plink`
+(version 1.9) to compute the square distance matrix. This is done in script
+`methods/generate_IBS_and_allele_count_distances.sh`, which was submitted to
+our job-queue using `qsub`.
+
+_Note_ that this analysis currently is only done for Ata's data (see section
+`material` for details).
+
+This step produces:
+```
+./results/all_public_and_all_untwist_SNP_filtered.mdist
+./results/all_public_and_all_untwist_SNP_filtered.mdist.id
+./results/all_public_and_all_untwist_SNP_filtered.dist
+./results/all_public_and_all_untwist_SNP_filtered.dist.id
+```
+
+Note, that the `[...].dist` files contain the allele count based distance and
+row names (`[...].dist.id`) information. The `[...].mdist` and `[...].mdist.id`
+files contain the same but for IBS distances.
 
 ### Principal Component Analysis
 
@@ -258,6 +278,30 @@ Note that the transposed coordinate matrix for the accessions are in file
 `results/public_and_untwist_bcftools_and_plink_filtered_pca_matrix.rel` and the
 row, i.e. the accession names are in file
 `results/public_and_untwist_bcftools_and_plink_filtered_pca_matrix.rel.id`.
+
+#### PCA for Ata's data
+
+We use `plink` (version 1.9) to carry out a principal component analysis of the
+SNP variants.
+
+Find the `plink` instructions in File
+`./methods/principal_component_analysis_for_ata.sh`. Submitted to our job-queue
+with `qsub`.
+
+This step produces:
+```
+./results/all_public_and_all_untwist_SNP_filtered_pca.eigenval
+./results/all_public_and_all_untwist_SNP_filtered_pca.eigenvec
+./results/all_public_and_all_untwist_SNP_filtered_pca.eigenvec.var
+./results/all_public_and_all_untwist_SNP_filtered_pca.log
+./results/all_public_and_all_untwist_SNP_filtered_pca.nosex
+./results/all_public_and_all_untwist_SNP_filtered_pca.rel
+./results/all_public_and_all_untwist_SNP_filtered_pca.rel.id
+```
+
+Note that the transposed coordinate matrix for the accessions are in file
+`[...].rel` and the accession identifier, that is the row names are in file
+`[...].rel.id`.
 
 #### k-means clustering
 
@@ -279,3 +323,45 @@ results/k_means_scatterplot_k=4.pdf
 results/k_means_scatterplot_k=6.pdf
 results/k_means_silhoutte_plot.pdf
 ```
+
+##### k-means clustering for Ata's data
+
+A copy of the above R-script was created
+`./methods/k_means_clustering_for_ata.R` and adjusted so it worked on Ata's
+data.
+
+### ADMIXTURE analysis
+
+ADMIXTURE identifies the proportions of each accession's genome belonging to a
+certain sub-population. The number of populations has to be defined as an input
+parameter. 
+
+_Note_ that this analysis currently is only done for Ata's data (see section
+material).
+
+#### Prepare input for ADMIXTURE
+
+ADMIXTURE requires a certain input format (a `bed` file). Using `plink` it can
+be produced from the input variant matrix in `VCF` format.
+
+The script to do this conversion is
+`./methods/generate_admixture_bed_input.sh`. It was submitted to our job-queue
+with the standard `qsub` command.
+
+#### Run ADMIXTURE for different assumed numbers of populations (_k_)
+
+For each _k_ there is a single ADMIXTURE script that was submitted to our
+job-queue using `qsub`. All of these scripts are identical, except the _k_
+parameter.
+
+We used values 3,4,5, and 6 for _k_.
+
+See, for example, `./methods/admixture_k3.sh`, which produces the results:
+```
+./results/all_public_and_all_untwist_SNP_filtered.3.P
+./results/all_public_and_all_untwist_SNP_filtered.3.Q
+./results/all_public_and_all_untwist_SNP_filtered_admixture_k3.out
+./results/all_public_and_all_untwist_SNP_filtered_admixture_k3.cv.error
+```
+Note, that the above four result files are created for each _k_. The ones
+listed above are for _k_=3.
