@@ -75,19 +75,19 @@ for (i in unt_good_ks) {
   pdf(paste0("./results/k_means_scatterplot_k=", i, "_for_ata.pdf"))
   kmeans_res <- unt_k_means[[toString(i)]]
   plot(
-    x = unt_coords[, 1], y = unt_coords[, 2], type = "p", 
+    x = unt_coords[, 1], y = unt_coords[, 2], type = "p",
     pch = unt_pchs,
     col = kmeans_res$cluster,
-    main=paste0("k-means clustering result for k=",i),
+    main = paste0("k-means clustering result for k=", i),
     xlab = "1st principal component",
     ylab = "2nd principal component"
   )
-  legend("topright", legend=c("Untwist", "Public"), pch = c(22, 21))
+  legend("topright", legend = c("Untwist", "Public"), pch = c(22, 21))
   dev.off()
 }
 
 #' hclust
 unt_hclust <- hclust(dist(unt_coords), method = "average")
 pdf("./results/hclust_tree_for_ata.pdf", width = 21, height = 7)
-plot(unt_hclust, cex=0.5)
+plot(unt_hclust, cex = 0.5)
 dev.off()
