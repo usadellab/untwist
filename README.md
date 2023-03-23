@@ -373,3 +373,7 @@ See, for example, `./methods/admixture_k3.sh`, which produces the results:
 ```
 Note, that the above four result files are created for each _k_. The ones
 listed above are for _k_=3.
+
+#### Plot ADMIXTURE results
+
+
