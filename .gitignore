@@ -3,10 +3,11 @@ results/*
 !results/*.pdf
 !results/*.tsv
 !results/*.newick
-!results/*.P
+!results/*.Q
 !results/*.rel
 !results/*.rel.id
 !results/*.dist
 !results/*.dist.id
+!results/*.fam
 *.err
 *.out

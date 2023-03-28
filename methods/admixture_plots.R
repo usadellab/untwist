@@ -64,6 +64,13 @@ for (k in admxtr_cv_errs[, "k"]) {
     admxtr_tbl_k[
       match(unt_hclust$labels[unt_hclust$order], admxtr_tbl_k$accession),
     ]
+  #' Save the table:
+  write.table(admxtr_tbl_k, paste0(
+      "./results/all_public_and_all_untwist_SNP_filtered_admixture_k",
+      k, "_result_table.tsv"
+    ),
+    sep = "\t", row.names=FALSE, quote=FALSE
+  )
 
   #' Plot
   pdf(

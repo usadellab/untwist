@@ -400,6 +400,16 @@ results/all_public_and_all_untwist_SNP_filtered_admixture_k6_barplot_IBS_hclust.
 Note that in each of these plots a hierarchical clustering tree is aligned with
 a typical Admixture barplot.
 
+The ADMIXTURE results are saved as tables, where the first column is the
+accession identifier and the later columns hold the respective accession
+genomes' percentage coming from the column ancestra population:
+```
+results/all_public_and_all_untwist_SNP_filtered_admixture_k3_result_table.tsv
+results/all_public_and_all_untwist_SNP_filtered_admixture_k4_result_table.tsv
+results/all_public_and_all_untwist_SNP_filtered_admixture_k5_result_table.tsv
+results/all_public_and_all_untwist_SNP_filtered_admixture_k6_result_table.tsv
+```
+
 The script generates a scattter plot of the cross validation error (y-axis)
 depending on the assumed number of populations _k_ (x-axis):
 `./results/all_public_and_all_untwist_SNP_filtered_admixture_cv_error_scatter_plot.pdf`
