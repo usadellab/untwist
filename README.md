@@ -270,6 +270,13 @@ results:
 ./results/hclust_on_allele_cnts_tree_for_ata.pdf
 ```
 
+Note that the respective dendrograms are stored in Newick format in the
+following files:
+```
+./results/hclust_on_1_min_IBS_tree_for_ata.newick
+./results/hclust_on_allele_cnts_tree_for_ata.newick
+```
+
 ### Principal Component Analysis
 
 We use `plink` (version 1.9) to carry out a principal component analysis of the
@@ -338,6 +345,13 @@ A copy of the above R-script was created
 `./methods/k_means_clustering_for_ata.R` and adjusted so it worked on Ata's
 data.
 
+Tables listing the `Accession` identifiers in the first column and the cluster
+number that accession belongs to in the second have been saved to:
+```
+./results/k_means_result_k=3_for_ata.tsv
+./results/k_means_result_k=9_for_ata.tsv
+```
+
 ### ADMIXTURE analysis
 
 ADMIXTURE identifies the proportions of each accession's genome belonging to a
@@ -376,4 +390,16 @@ listed above are for _k_=3.
 
 #### Plot ADMIXTURE results
 
+See script `./methods/admixture_plots.R`. It produces the following plots:
+```
+results/all_public_and_all_untwist_SNP_filtered_admixture_k3_barplot_IBS_hclust.pdf
+results/all_public_and_all_untwist_SNP_filtered_admixture_k4_barplot_IBS_hclust.pdf
+results/all_public_and_all_untwist_SNP_filtered_admixture_k5_barplot_IBS_hclust.pdf
+results/all_public_and_all_untwist_SNP_filtered_admixture_k6_barplot_IBS_hclust.pdf
+```
+Note that in each of these plots a hierarchical clustering tree is aligned with
+a typical Admixture barplot.
 
+The script generates a scattter plot of the cross validation error (y-axis)
+depending on the assumed number of populations _k_ (x-axis):
+`./results/all_public_and_all_untwist_SNP_filtered_admixture_cv_error_scatter_plot.pdf`

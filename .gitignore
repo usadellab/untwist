@@ -1,5 +1,12 @@
 material/*
 results/*
 !results/*.pdf
+!results/*.tsv
+!results/*.newick
+!results/*.P
+!results/*.rel
+!results/*.rel.id
+!results/*.dist
+!results/*.dist.id
 *.err
 *.out

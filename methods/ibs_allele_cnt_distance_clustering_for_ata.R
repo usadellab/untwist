@@ -1,3 +1,4 @@
+require(ape)
 require(cluster)
 
 #' Set working directory
@@ -25,8 +26,14 @@ rownames(unt_1_min_ibs_mtrx) <- unt_accession_names
 
 #' hclust
 unt_hclust <- hclust(as.dist(unt_1_min_ibs_mtrx), method = "average")
+#' Save a newick tree of the hclust result:
+write.tree(
+  as.phylo(unt_hclust),
+  "./results/hclust_on_1_min_IBS_tree_for_ata.newick"
+)
+#' Plot the hclust result
 pdf("./results/hclust_on_1_min_IBS_tree_for_ata.pdf", width = 21, height = 7)
-plot(unt_hclust, cex=0.5)
+plot(unt_hclust, cex = 0.5)
 dev.off()
 
 
@@ -50,6 +57,12 @@ rownames(unt_1_min_ibs_mtrx) <- unt_accession_names
 
 #' hclust
 unt_hclust <- hclust(as.dist(unt_1_min_ibs_mtrx), method = "average")
+#' Save a newick tree of the hclust result:
+write.tree(
+  as.phylo(unt_hclust),
+  "./results/hclust_on_allele_cnts_tree_for_ata.newick"
+)
+#' Plot the hclust result:
 pdf("./results/hclust_on_allele_cnts_tree_for_ata.pdf", width = 21, height = 7)
-plot(unt_hclust, cex=0.5)
+plot(unt_hclust, cex = 0.5)
 dev.off()

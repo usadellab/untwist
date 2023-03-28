@@ -84,6 +84,16 @@ for (i in unt_good_ks) {
   )
   legend("topright", legend = c("Untwist", "Public"), pch = c(22, 21))
   dev.off()
+  #' Save cluster results:
+  kmeans_res_df <- as.data.frame(kmeans_res$cluster)
+  colnames(kmeans_res_df) <- paste0("k-means-cluster_(k=", i, ")")
+  kmeans_res_df$Accession <- rownames(kmeans_res_df)
+  write.table(kmeans_res_df[, c(2, 1)],
+    paste0("./results/k_means_result_k=", i, "_for_ata.tsv"),
+    row.names = FALSE,
+    sep = "\t",
+    quote = FALSE
+  )
 }
 
 #' hclust
