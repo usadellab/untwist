@@ -87,6 +87,12 @@ single nucleotide polymorphism variants has been copied to
 This variant matrix is analyzed in parallel to the above merging of public and
 Untwist data.
 
+# WARNING
+::bangbang::
+# only file all_public_and_all_untwist_SNP_filtered.vcf.gz
+# seems to ever be  used 
+# whether it is correct or not and pruned or not is unclear
+
 ##### Untwist lines not present in Ata's data
 
 Ata's script uses a list of Untwist accessions to be kept when filtering with
