@@ -4,8 +4,7 @@ results/*
 !results/*.tsv
 !results/*.newick
 !results/*.Q
-!results/*.rel
-!results/*.rel.id
+!results/*.eigenvec
 !results/*.dist
 !results/*.dist.id
 !results/*.fam
