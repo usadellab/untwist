@@ -286,13 +286,19 @@ Find the `plink` instructions in File
 `./methods/principal_component_analysis.sh`. Submitted to our job-queue with
 `qsub methods/principal_component_analysis.sh`.
 
-This step produces
-`./results/public_and_untwist_bcftools_and_plink_filtered_pca_matrix.*`
+This step produces:
+```
+./results/public_and_untwist_bcftools_and_plink_filtered_pca.eigenval
+./results/public_and_untwist_bcftools_and_plink_filtered_pca.eigenvec
+./results/public_and_untwist_bcftools_and_plink_filtered_pca.eigenvec.var
+./results/public_and_untwist_bcftools_and_plink_filtered_pca.log
+./results/public_and_untwist_bcftools_and_plink_filtered_pca.nosex
+./results/public_and_untwist_bcftools_and_plink_filtered_pca.rel
+./results/public_and_untwist_bcftools_and_plink_filtered_pca.rel.id
+```
 
-Note that the transposed coordinate matrix for the accessions are in file
-`results/public_and_untwist_bcftools_and_plink_filtered_pca_matrix.rel` and the
-row, i.e. the accession names are in file
-`results/public_and_untwist_bcftools_and_plink_filtered_pca_matrix.rel.id`.
+Note that the matrix accession eigenvectors is stored in 
+`results/public_and_untwist_bcftools_and_plink_filtered_pca.eigenvec`.
 
 #### PCA for Ata's data
 
@@ -314,9 +320,8 @@ This step produces:
 ./results/all_public_and_all_untwist_SNP_filtered_pca.rel.id
 ```
 
-Note that the transposed coordinate matrix for the accessions are in file
-`[...].rel` and the accession identifier, that is the row names are in file
-`[...].rel.id`.
+Note that the matrix accession eigenvectors is stored in 
+`./results/all_public_and_all_untwist_SNP_filtered_pca.eigenvec`.
 
 #### k-means clustering
 
