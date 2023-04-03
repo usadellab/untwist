@@ -92,6 +92,8 @@ Untwist data.
 # only file all_public_and_all_untwist_SNP_filtered.vcf.gz
 # seems to ever be  used 
 # whether it is correct or not and pruned or not is unclear
+# 3.April 2023: based on checking MAF 0.05 and missing 0.1 was used. This was checked by filtering in Tassel and SNPReleate using these setting resulting in no filtering
+## branch from here to R SNPrelate
 
 ##### Untwist lines not present in Ata's data
 
