@@ -87,14 +87,6 @@ single nucleotide polymorphism variants has been copied to
 This variant matrix is analyzed in parallel to the above merging of public and
 Untwist data.
 
-# WARNING
-::bangbang::
-# only file all_public_and_all_untwist_SNP_filtered.vcf.gz
-# seems to ever be  used 
-# whether it is correct or not and pruned or not is unclear
-# 3.April 2023: based on checking MAF 0.05 and missing 0.1 was used. This was checked by filtering in Tassel and SNPReleate using these setting resulting in no filtering
-## branch from here to R SNPrelate
-
 ##### Untwist lines not present in Ata's data
 
 Ata's script uses a list of Untwist accessions to be kept when filtering with
@@ -426,18 +418,5 @@ results/all_public_and_all_untwist_SNP_filtered_admixture_k6_result_table.tsv
 The script generates a scattter plot of the cross validation error (y-axis)
 depending on the assumed number of populations _k_ (x-axis):
 `./results/all_public_and_all_untwist_SNP_filtered_admixture_cv_error_scatter_plot.pdf`
-
-# checking both trees versus knowledge
-UNT29 CAM25  in Ata (UNT29,CAM111),CAM29 in other missing  
-UNT34 = UNT49 =Calena CAM134 correct in both  
-UNT38 Cs028/CAM57 in full tree but UNT25 is closest to CAM57 in both   ::x:: 
-UNT50 CAM147 confirmed in both  
-UNT52 CAM156 confirmed in both  
-UNT53 CAM159 confirmed n both (note CAMPUB!)  
-UNT54 CAM165 confirmed in both  
-UNT55 CAM167 confirmed in Ata ::x:: only not in the other!  
-UNT56 CAM232 confirmed in Ata ::x:: only not in the other!  
-UNT57 CAM278 conformed in Ata close in other  
-UNT59 C233 : nt CS233 in other ---- very far; is this the same nomenclature  
 
 
