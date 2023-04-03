@@ -61,7 +61,7 @@ dev.off()
 
 # Visual inspection and an educated interpretation yields
 # that k=3 and k=10 are good cluster numbers
-unt_good_ks <- c(3, 9)
+unt_good_ks <- 3:10
 unt_pchs <- unlist(lapply(rownames(unt_coords), function(accession_id) {
   if (grepl("^UNT", accession_id)) {
     22
@@ -80,7 +80,7 @@ for (i in unt_good_ks) {
     xlab = "1st principal component",
     ylab = "2nd principal component"
   )
-  legend("topright", legend = c("Untwist", "Public"), pch = c(22, 21))
+  legend("topleft", legend = c("Untwist", "Public"), pch = c(22, 21))
   dev.off()
   #' Save cluster results:
   kmeans_res_df <- as.data.frame(kmeans_res$cluster)
