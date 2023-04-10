@@ -1,6 +1,6 @@
 #!/bin/bash
 #$ -l mem_free=1G,h_vmem=1G       
-#$ -pe smp 20
+#$ -pe smp 60
 #$ -e /mnt/data/asis/untwist/methods/generate_admixture_bed_input.err
 #$ -o /mnt/data/asis/untwist/methods/generate_admixture_bed_input.out
 
@@ -22,7 +22,7 @@ cd ${DIR}
 FILE=all_public_and_all_untwist_SNP_filtered
 
 # Generate the input file in plink format
-/mnt/bin/plink/plink_1.9/plink --threads 20 --vcf ${FILE}.vcf.gz --make-bed --out $FILE --allow-extra-chr --double-id --vcf-half-call m; 
+/mnt/bin/plink/plink_1.9/plink --threads 60 --vcf ${FILE}.vcf.gz --make-bed --out $FILE --allow-extra-chr --double-id --vcf-half-call m; 
 
 # ADMIXTURE does not accept chromosome names that are not human chromosomes. We
 # will thus just exchange the first column by 0

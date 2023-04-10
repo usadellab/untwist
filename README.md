@@ -86,7 +86,12 @@ Moore, 2012).
 Such linked SNPs can bias population structure analyses. Thus we need to filter
 out SNPs that are highly correlated.
 
+See script `./methods/filter_out_LD_correlated_SNPs.sh` for details on how
+`bcftools` (version 1.9) was used to filter out SNPs correlated to other
+positions with an `r^2 >= 0.4`.
 
+After filtering 452,176 SNPs remained. The result is stored in file
+`./results/all_public_and_all_untwist_SNP_filtered.vcf.gz`.
 
 ### Complete Linkage Clustering based on identity by state (IBS) distances
 
@@ -106,7 +111,7 @@ Note that the clusters are contained in file `...cluster1`, one cluster per
 line separated by the cluster name a `<TAB>` and the cluster members comma
 separated.
 
-### Identity by state (IBS) distance based clustering
+### Identity by state (IBS) distance based hierarchical clustering
 
 IBS is a standard distance measure between two accessions. We use `plink`
 (version 1.9) to compute the square distance matrix. This is done in script
@@ -125,7 +130,7 @@ Note, that the `[...].dist` files contain the allele count based distance and
 row names (`[...].dist.id`) information. The `[...].mdist` and `[...].mdist.id`
 files contain the same but for IBS distances.
 
-The clustering and visualization is done with the R-script
+The hierarchical clustering and visualization is done with the R-script
 `./methods/ibs_allele_cnt_distance_clustering_for_ata.R`. It produces these
 results:
 ```
@@ -166,7 +171,7 @@ Note that the matrix accession eigenvectors is stored in
 #### k-means clustering
 
 k-means clustering was executed in `R` using the script
-`methods/k_means_clustering_for_ata.R.R`.
+`methods/k_means_clustering_for_ata.R`.
 
 The best number of clusters was found using the elbow and the silhouette
 methods (see the respective plots).
@@ -202,7 +207,7 @@ For each _k_ there is a single ADMIXTURE script that was submitted to our
 job-queue using `qsub`. All of these scripts are identical, except the _k_
 parameter.
 
-We used values 3,4,5, and 6 for _k_.
+We used values `3,4,...,10` for _k_.
 
 See, for example, `./methods/admixture_k3.sh`, which produces the results:
 ```
@@ -222,6 +227,7 @@ results/all_public_and_all_untwist_SNP_filtered_admixture_k3_barplot_IBS_hclust.
 results/all_public_and_all_untwist_SNP_filtered_admixture_k4_barplot_IBS_hclust.pdf
 results/all_public_and_all_untwist_SNP_filtered_admixture_k5_barplot_IBS_hclust.pdf
 results/all_public_and_all_untwist_SNP_filtered_admixture_k6_barplot_IBS_hclust.pdf
+[...]
 ```
 Note that in each of these plots a hierarchical clustering tree is aligned with
 a typical Admixture barplot.
@@ -234,6 +240,7 @@ results/all_public_and_all_untwist_SNP_filtered_admixture_k3_result_table.tsv
 results/all_public_and_all_untwist_SNP_filtered_admixture_k4_result_table.tsv
 results/all_public_and_all_untwist_SNP_filtered_admixture_k5_result_table.tsv
 results/all_public_and_all_untwist_SNP_filtered_admixture_k6_result_table.tsv
+[...]
 ```
 
 The script generates a scattter plot of the cross validation error (y-axis)
