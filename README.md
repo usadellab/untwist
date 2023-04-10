@@ -39,7 +39,7 @@ A copy has been placed into methods:
 
 The result of this merging of public and _resequenced_ Untwist accessions
 single nucleotide polymorphism variants has been copied to
-`./results/all_public_and_all_untwist_SNP_filtered.vcf.gz`.
+`./results/all_public_and_all_untwist_SNP_filtered_from_ata.vcf.gz`.
 
 This variant matrix is analyzed in parallel to the above merging of public and
 Untwist data.
@@ -75,6 +75,18 @@ UNT51
 
 This section describes step by step how the above material is processed to
 identify populations and assign accessions to them.
+
+### Filtering out correlated SNPs
+
+Linkage disequilibrium (LD) is a population-based parameter that describes the
+degree to which an allele of one genetic variant is inherited or correlated
+with an allele of a nearby genetic variant within a given population (Bush and
+Moore, 2012).
+
+Such linked SNPs can bias population structure analyses. Thus we need to filter
+out SNPs that are highly correlated.
+
+
 
 ### Complete Linkage Clustering based on identity by state (IBS) distances
 
