@@ -15,7 +15,7 @@ admxtr_cv_errs <- do.call(rbind, lapply(system(
   )
 }))
 #' Fix wrong reading of two digits for k:
-admxtr_cv_errs[which(admxtr_cv_errs$k == "1:"),]$k <- 10
+admxtr_cv_errs <- admxtr_cv_errs[ order(admxtr_cv_errs$k), ]
 
 #' Plot Admixture cross validation errors
 pdf(

@@ -26,7 +26,7 @@ i=10
 /mnt/data/asis/software/dist/admixture_linux-1.3.0/admixture -j60 --cv $FILE.bed $i > ${FILE}_admixture_k${i}.out
 
 # Print the cross validation performance for each of the above runs:
-awk '/CV/ {print $3,$4}' ${FILE}_admixture_k${i}.out | cut -c 4,7-20 > ${FILE}_admixture_k${i}.cv.error
+awk '/CV/ {print $3,$4}' ${FILE}_admixture_k${i}.out | sed -e 's/^(K=\([0-9]\+\)): \([0-9.]\+\)$/\1 \2/' > ${FILE}_admixture_k${i}.cv.error
 
 # END ADMIXTURE script
 
