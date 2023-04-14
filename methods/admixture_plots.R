@@ -18,7 +18,7 @@ admxtr_cv_errs <- do.call(rbind, lapply(system(
   )
 }))
 #' Fix wrong reading of two digits for k:
-admxtr_cv_errs <- admxtr_cv_errs[ order(admxtr_cv_errs$k), ]
+admxtr_cv_errs <- admxtr_cv_errs[order(admxtr_cv_errs$k), ]
 
 #' Plot Admixture cross validation errors
 pdf(
@@ -80,10 +80,15 @@ for (k in admxtr_cv_errs[, "k"]) {
   #' Plot
   unt_class_col <- brewer.pal(3, "Set1")
   unt_accs_cols <- unlist(lapply(admxtr_tbl_k$accession, function(acc_id) {
-                                   if (grepl("^UNT", acc_id)) { unt_class_col[[1]]} else {unt_class_col[[2]]}
+    if (grepl("^UNT", acc_id)) {
+      unt_class_col[[1]]
+    } else {
+      unt_class_col[[2]]
+    }
   }))
   unt_dend <- as.dendrogram(unt_hclust)
   labels_colors(unt_dend) <- unt_accs_cols
+  labels_cex(unt_dend) <- 0.5
   pdf(
     paste0(
       "./results/all_public_and_all_untwist_SNP_filtered_admixture_k",
@@ -92,13 +97,16 @@ for (k in admxtr_cv_errs[, "k"]) {
     width = 21, height = 7
   )
   old_par <- par(mfrow = 2:1)
+  par(mar = c(3, 4.1, 4.1, 2.1))
   plot(unt_dend, xlab = "", sub = "", cex = 0.5)
+  par(mar = c(5.1, 4.1, 0.5, 2.1))
   barplot(
     t(as.matrix(
       admxtr_tbl_k[, setdiff(colnames(admxtr_tbl_k), "accession")]
     )),
-    col = brewer.pal(k, "Set3"), ylab = "Ancestry", border = "black", las = 2,
-    names.arg = admxtr_tbl_k$accession, cex.names = 0.5
+    col = brewer.pal(k, "Set3"), ylab = "Ancestry", border = "black",
+    xaxt = "n"
+    # las = 2, names.arg = admxtr_tbl_k$accession, cex.names = 0.5
   )
   dev.off()
 }
