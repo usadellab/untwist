@@ -1,3 +1,5 @@
+require(RColorBrewer)
+
 #' Set working directory
 if (dir.exists("/mnt/data/asis/untwist/")) {
   setwd("/mnt/data/asis/untwist/")
@@ -88,7 +90,7 @@ for (k in admxtr_cv_errs[, "k"]) {
     t(as.matrix(
       admxtr_tbl_k[, setdiff(colnames(admxtr_tbl_k), "accession")]
     )),
-    col = rainbow(k), ylab = "Ancestry", border = "black", las = 2,
+    col = brewer.pal(k, "Set3"), ylab = "Ancestry", border = "black", las = 2,
     names.arg = admxtr_tbl_k$accession, cex.names = 0.5
   )
   dev.off()

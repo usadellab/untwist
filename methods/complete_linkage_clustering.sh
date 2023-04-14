@@ -1,8 +1,8 @@
 #!/bin/bash
 #$ -l mem_free=1G,h_vmem=1G       
 #$ -pe smp 20
-#$ -e /mnt/data/asis/untwist/methods/complete_linkage_clustering_for_ata.err
-#$ -o /mnt/data/asis/untwist/methods/complete_linkage_clustering_for_ata.out
+#$ -e /mnt/data/asis/untwist/methods/complete_linkage_clustering.err
+#$ -o /mnt/data/asis/untwist/methods/complete_linkage_clustering.out
 
 echo "**** Job starts ****"              
 date
