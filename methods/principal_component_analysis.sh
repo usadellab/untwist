@@ -1,8 +1,8 @@
 #!/bin/bash
 #$ -l mem_free=1G,h_vmem=1G       
 #$ -pe smp 20
-#$ -e /mnt/data/asis/untwist/methods/principal_component_analysis_for_ata.err
-#$ -o /mnt/data/asis/untwist/methods/principal_component_analysis_for_ata.out
+#$ -e /mnt/data/asis/untwist/methods/principal_component_analysis.err
+#$ -o /mnt/data/asis/untwist/methods/principal_component_analysis.out
 
 echo "**** Job starts ****"              
 date

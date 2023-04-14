@@ -1,25 +1,37 @@
 #!/bin/bash
-#$ -l mem_free=40G,h_vmem=40G       
-#$ -pe smp 20
+#$ -l mem_free=3G,h_vmem=3G       
+#$ -pe smp 60
 #$ -e /mnt/data/asis/untwist/methods/filter_untwist_variants.err
 #$ -o /mnt/data/asis/untwist/methods/filter_untwist_variants.out
 
 echo "**** Job starts ****"              
 date
 
-echo "**** info ****"                    
-echo "User: ${USER}"                     
-echo "Job id: ${JOB_ID}"                 
-echo "Job name: ${JOB_NAME}"             
-echo "Hostname: ${HOSTNAME}"             
+echo "**** info ****"
+echo "User: ${USER}"
+echo "Job id: ${JOB_ID}"
+echo "Job name: ${JOB_NAME}"
+echo "Hostname: ${HOSTNAME}"
+echo "Number of threads: ${NSLOTS}"
+echo "****------****"
 
+
+# Set working directory:
 DIR=/mnt/data/asis/untwist
 cd ${DIR}
 
-# For documentation, please see
-# https://samtools.github.io/bcftools/howtos/filtering.html
-# (last accessed 03/18/23)
-/mnt/bin/bcftools/bcftools-1.9/bcftools view --threads 20 -s "^$(cat ./results/NC_all_gatk_CAM_casom_CAMPUB223_54UNT_accessions_to_exclude.txt)" -i 'QUAL>20 && FORMAT/DP>3' -O z -o results/NC_all_gatk_UNT_check_snps_all_reseq_bcftools_filtered.vcf.gz ./material/NC_all_gatk_UNT_check_snps_all_reseq.vcf;
+
+# Select only those accessions (genotypes) that we are allowed to publish and
+# that are the newest sequencing version. And also filter SNPs, retaining:
+# - only bi-allelic
+# - those who have less than 10% of the genotypes with missing data
+# - those with a mapping depth of at least 3 (> 2)
+# - those with read quality score of at least 20 (> 19)
+# - those with at least minor allele frequency of 0.05
+/mnt/bin/bcftools/bcftools-1.9/bcftools view --threads ${NSLOTS} -S ./material/Untwist_Accessions.txt -i '%QUAL>19 && FORMAT/DP>2 && F_MISSING<0.1' -m2 -M2 -v snps -q 0.05:minor -Oz -o ./results/NC_all_gatk_UNT_check_all_reseq_valid_samples_filtered.vcf.gz ./material/NC_all_gatk_UNT_check_all_reseq.vcf
+
+# Index for merging:
+/mnt/bin/bcftools/bcftools-1.9/bin/bcftools index --threads ${NSLOTS} ./results/NC_all_gatk_UNT_check_all_reseq_valid_samples_filtered.vcf.gz
 
 echo "**** Job ends ****"
 date

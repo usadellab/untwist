@@ -1,2 +1,2 @@
-./results/NC_all_gatk_CAM_casom_CAMPUB223_54UNT_bcftools_filtered.vcf.gz
-./results/NC_all_gatk_UNT_check_snps_all_reseq_bcftools_filtered.vcf.gz
+./results/NC_all_gatk_CAM_casom_CAMPUB223_54UNT_valid_samples_filtered.vcf.gz
+./results/NC_all_gatk_UNT_check_all_reseq_valid_samples_filtered.vcf.gz

@@ -1,7 +1,6 @@
-
 #!/bin/bash
-#$ -l mem_free=40G,h_vmem=40G       
-#$ -pe smp 20
+#$ -l mem_free=3G,h_vmem=3G       
+#$ -pe smp 60
 #$ -e /mnt/data/asis/untwist/methods/merge_public_and_untwist_vcfs.err
 #$ -o /mnt/data/asis/untwist/methods/merge_public_and_untwist_vcfs.out
 
@@ -13,16 +12,14 @@ echo "User: ${USER}"
 echo "Job id: ${JOB_ID}"                 
 echo "Job name: ${JOB_NAME}"             
 echo "Hostname: ${HOSTNAME}"             
+echo "Number of threads: ${NSLOTS}"
+echo "****------****"                    
 
 DIR=/mnt/data/asis/untwist
 cd ${DIR}
 
-# First we need to index the two to be merged VCF files:
-/mnt/bin/bcftools/bcftools-1.9/bcftools index -f results/NC_all_gatk_CAM_casom_CAMPUB223_54UNT_bcftools_filtered.vcf.gz --threads 20;
-/mnt/bin/bcftools/bcftools-1.9/bcftools index -f results/NC_all_gatk_UNT_check_snps_all_reseq_bcftools_filtered.vcf.gz --threads 20;
-
-# Now we can merge them:
-/mnt/bin/bcftools/bcftools-1.9/bcftools merge --merge all -l methods/vcfList.txt -Oz -o results/public_and_untwist_bcftools_filtered.vcf.gz --threads 20;
+# Merge the two respective variant matrices (VCF files):
+/mnt/bin/bcftools/bcftools-1.9/bcftools merge --merge all -l methods/vcfList.txt -Oz -o ./results/all_public_and_all_untwist_SNP_filtered_NOT_LD_pruned.vcf.gz --threads ${NSLOTS};
 
 echo "**** Job ends ****"
 date

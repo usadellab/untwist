@@ -17,7 +17,7 @@ echo "Hostname: ${HOSTNAME}"
 DIR=/mnt/data/asis/untwist
 cd ${DIR}
 
-/mnt/bin/bcftools/bcftools-1.9/bcftools +prune -l0.7 -w 1000bp -Oz -o ./results/all_public_and_all_untwist_SNP_filtered.vcf.gz ./results/all_public_and_all_untwist_SNP_filtered_hard.vcf.gz;
+/mnt/bin/bcftools/bcftools-1.9/bcftools +prune -l0.7 -w 1000bp -Oz -o ./results/all_public_and_all_untwist_SNP_filtered.vcf.gz ./results/all_public_and_all_untwist_SNP_filtered_NOT_LD_pruned.vcf.gz;
 
 echo "**** Job ends ****"
 date

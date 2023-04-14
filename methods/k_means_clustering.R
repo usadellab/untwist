@@ -27,7 +27,7 @@ unt_k_means <- setNames(lapply(k_range, function(k) {
 
 #' Elbow method generates a plot of the total sum of squares of clusters
 #' variation, plots it and finds the bend "elbow" at the optimal k in the curve.
-pdf("./results/k_means_elbow_plot_for_ata.pdf")
+pdf("./results/k_means_elbow_plot.pdf")
 plot(
   x = k_range, y =
     unlist(lapply(unt_k_means, function(x) {
@@ -51,7 +51,7 @@ unt_k_means_sil <- lapply(unt_k_means, function(x) {
 })
 
 # Plot the Silhouette widths
-pdf("./results/k_means_silhoutte_plot_for_ata.pdf")
+pdf("./results/k_means_silhoutte_plot.pdf")
 plot(k_range, unt_k_means_sil,
   type = "b", pch = 19, frame = FALSE,
   xlab = "Number of clusters K",
@@ -59,43 +59,37 @@ plot(k_range, unt_k_means_sil,
 )
 dev.off()
 
-# Visual inspection and an educated interpretation yields
-# that k=3 and k=10 are good cluster numbers
+# Try different k ranging from 3,4,...,10:
 unt_good_ks <- 3:10
-unt_pchs <- unlist(lapply(rownames(unt_coords), function(accession_id) {
+unt_cex <- unlist(lapply(rownames(unt_coords), function(accession_id) {
   if (grepl("^UNT", accession_id)) {
-    22
+    0.75
   } else {
-    21
+    0.5
   }
 }))
+unt_labels <- sub("_(reseq|new)$", "",
+  sub("^CAMPUB", "C", sub("^UNT", "U", rownames(unt_coords))))
 for (i in unt_good_ks) {
-  pdf(paste0("./results/k_means_scatterplot_k=", i, "_for_ata.pdf"))
+  pdf(paste0("./results/k_means_scatterplot_k=", i, ".pdf"))
   kmeans_res <- unt_k_means[[toString(i)]]
   plot(
-    x = unt_coords[, 1], y = unt_coords[, 2], type = "p",
-    pch = unt_pchs,
-    col = kmeans_res$cluster,
+    x = unt_coords[, 1], y = unt_coords[, 2], type = "n",
     main = paste0("k-means clustering result for k=", i),
     xlab = "1st principal component",
     ylab = "2nd principal component"
   )
-  legend("topleft", legend = c("Untwist", "Public"), pch = c(22, 21))
+  text(x = unt_coords[, 1], y = unt_coords[, 2], labels = unt_labels, 
+    col = kmeans_res$cluster, cex = unt_cex)
   dev.off()
   #' Save cluster results:
   kmeans_res_df <- as.data.frame(kmeans_res$cluster)
   colnames(kmeans_res_df) <- paste0("k-means-cluster_(k=", i, ")")
   kmeans_res_df$Accession <- rownames(kmeans_res_df)
   write.table(kmeans_res_df[, c(2, 1)],
-    paste0("./results/k_means_result_k=", i, "_for_ata.tsv"),
+    paste0("./results/k_means_result_k=", i, ".tsv"),
     row.names = FALSE,
     sep = "\t",
     quote = FALSE
   )
 }
-
-#' hclust
-unt_hclust <- hclust(dist(unt_coords), method = "average")
-pdf("./results/hclust_tree_for_ata.pdf", width = 21, height = 7)
-plot(unt_hclust, cex = 0.5)
-dev.off()

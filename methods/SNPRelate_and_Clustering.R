@@ -28,11 +28,11 @@ unt_hclust <- hclust(as.dist(unt_1_min_ibs_mtrx), method = "average")
 #' Save a newick tree of the hclust result:
 write.tree(
   as.phylo(unt_hclust),
-  "./results/hclust_on_1_min_IBS_tree_for_ata.newick"
+  "./results/hclust_on_1_min_IBS_tree.newick"
 )
 #' Plot the hclust result
 cu<-cutree(unt_hclust, k = 3) 
-pdf("./results/hclust_on_1_min_IBS_tree_for_ata.pdf", width = 21, height = 7)
+pdf("./results/hclust_on_1_min_IBS_tree.pdf", width = 21, height = 7)
 
 plot(unt_hclust, cex = 0.5)
 rect.hclust(unt_hclust,k=3, border=c("red","blue","yellow"))

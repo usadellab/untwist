@@ -1,0 +1,16 @@
+methods/filter_public_variants.sh
+methods/filter_untwist_variants.sh
+methods/merge_public_and_untwist_vcfs.sh
+methods/filter_out_LD_correlated_SNPs.sh
+methods/principal_component_analysis.sh
+methods/generate_IBS_and_allele_count_distances.sh
+methods/generate_admixture_bed_input.sh
+methods/admixture_k3.sh
+methods/admixture_k4.sh
+methods/admixture_k5.sh
+methods/admixture_k6.sh
+methods/admixture_k7.sh
+methods/admixture_k8.sh
+methods/admixture_k9.sh
+methods/admixture_k10.sh
+methods/complete_linkage_clustering.sh
