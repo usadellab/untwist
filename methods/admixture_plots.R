@@ -1,4 +1,5 @@
 require(RColorBrewer)
+require(dendextend)
 
 #' Set working directory
 if (dir.exists("/mnt/data/asis/untwist/")) {
@@ -78,8 +79,11 @@ for (k in admxtr_cv_errs[, "k"]) {
 
   #' Plot
   unt_class_col <- brewer.pal(3, "Set1")
-  unt_accs_indx <- grepl("^UNT", admxtr_tbl_k$accession)
-  campub_accs_indx <- grepl("^CAMPUB", admxtr_tbl_k$accession)
+  unt_accs_cols <- unlist(lapply(admxtr_tbl_k$accession, function(acc_id) {
+                                   if (grepl("^UNT", acc_id)) { unt_class_col[[1]]} else {unt_class_col[[2]]}
+  }))
+  unt_dend <- as.dendrogram(unt_hclust)
+  labels_colors(unt_dend) <- unt_accs_cols
   pdf(
     paste0(
       "./results/all_public_and_all_untwist_SNP_filtered_admixture_k",
@@ -88,7 +92,7 @@ for (k in admxtr_cv_errs[, "k"]) {
     width = 21, height = 7
   )
   old_par <- par(mfrow = 2:1)
-  plot(unt_hclust, xlab = "", sub = "", cex = 0.5)
+  plot(unt_dend, xlab = "", sub = "", cex = 0.5)
   barplot(
     t(as.matrix(
       admxtr_tbl_k[, setdiff(colnames(admxtr_tbl_k), "accession")]
@@ -96,7 +100,5 @@ for (k in admxtr_cv_errs[, "k"]) {
     col = brewer.pal(k, "Set3"), ylab = "Ancestry", border = "black", las = 2,
     names.arg = admxtr_tbl_k$accession, cex.names = 0.5
   )
-  axis(1, at=which(unt_accs_indx), labels=admxtr_tbl_k$accession[unt_accs_indx], col.axis = unt_class_col[[1]])
-  axis(1, at=which(campub_accs_indx), labels=admxtr_tbl_k$accession[campub_accs_indx], col.axis = unt_class_col[[2]])
   dev.off()
 }
