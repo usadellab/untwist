@@ -77,6 +77,9 @@ for (k in admxtr_cv_errs[, "k"]) {
   )
 
   #' Plot
+  unt_class_col <- brewer.pal(3, "Set1")
+  unt_accs_indx <- grepl("^UNT", admxtr_tbl_k$accession)
+  campub_accs_indx <- grepl("^CAMPUB", admxtr_tbl_k$accession)
   pdf(
     paste0(
       "./results/all_public_and_all_untwist_SNP_filtered_admixture_k",
@@ -93,5 +96,7 @@ for (k in admxtr_cv_errs[, "k"]) {
     col = brewer.pal(k, "Set3"), ylab = "Ancestry", border = "black", las = 2,
     names.arg = admxtr_tbl_k$accession, cex.names = 0.5
   )
+  axis(1, at=which(unt_accs_indx), labels=admxtr_tbl_k$accession[unt_accs_indx], col.axis = unt_class_col[[1]])
+  axis(1, at=which(campub_accs_indx), labels=admxtr_tbl_k$accession[campub_accs_indx], col.axis = unt_class_col[[2]])
   dev.off()
 }
