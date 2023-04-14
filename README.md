@@ -91,6 +91,8 @@ for this information:
 * [4] `methods/generate_IBS_and_allele_count_distances.sh`
 * [4] `methods/generate_admixture_bed_input.sh`
 * [4] `methods/complete_linkage_clustering.sh`
+* [5] `methods/k_means_clustering.R`
+* [5] `methods/ibs_allele_cnt_distance_clustering.R`
 * [5] `methods/admixture_k3.sh`
 * [5] `methods/admixture_k4.sh`
 * [5] `methods/admixture_k5.sh`
@@ -99,6 +101,7 @@ for this information:
 * [5] `methods/admixture_k8.sh`
 * [5] `methods/admixture_k9.sh`
 * [5] `methods/admixture_k10.sh`
+* [6] `methods/admixture_plots.R`
 
 #### Generation of the variant matrix (VCF file)
 
