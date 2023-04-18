@@ -129,6 +129,10 @@ The results of the two above filering steps are merged into a single variant
 matrix (VCF file). See script `./methods/merge_public_and_untwist_vcfs.sh` for
 details.
 
+This produces the variant matrix file:
+`./results/all_public_and_all_untwist_SNP_filtered_NOT_LD_pruned.vcf.gz`
+that holds **2,719,667 SNPs**.
+
 ##### Filtering out correlated SNPs
 
 Linkage disequilibrium (LD) is a population-based parameter that describes the
