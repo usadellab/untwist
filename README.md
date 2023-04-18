@@ -85,7 +85,7 @@ of which scripts can be executed in parallel - see number in square brackets
 for this information:
 * [1] `methods/filter_public_variants.sh`
 * [1] `methods/filter_untwist_variants.sh`
-* [2] `methods/merge_public_and_untwist_vcfs.sh`
+* [2] `methods/merge_and_filter_public_and_untwist_vcfs.sh`
 * [3] `methods/filter_out_LD_correlated_SNPs.sh`
 * [4] `methods/principal_component_analysis.sh`
 * [4] `methods/generate_IBS_and_allele_count_distances.sh`
@@ -109,29 +109,32 @@ See materials for the two input VCF matrix files provided by Ashraf.
 
 ##### Filtering out low quality SNPs and other variants
 
-The input variant matrices are filtered, so that the following statements are
-true for all retained variants:
-- all variants are SNPs
-- all SNPs are bi-allelic
-- all SNPs have less than 10% of the genotypes with missing data
-- all SNPs have a mapping depth of at least 3 (> 2)
-- all SNPs have read quality score of at least 20 (> 19)
-- all SNPs have at least minor allele frequency of 0.05
+The input variant matrices are filtered, so that the resulting variant matrices
+(VCF files) contain only the samples, we are allowed to analyze and publish.
 
-Each input variant matrix is filtered seperately, see scripts:
+For details see scripts:
 
 - `methods/filter_public_variants.sh`
 - `methods/filter_untwist_variants.sh`
 
-##### Merging filtered variant matrices
+##### Merg public and Untwist variant matrices and filter the result
 
-The results of the two above filering steps are merged into a single variant
-matrix (VCF file). See script `./methods/merge_public_and_untwist_vcfs.sh` for
-details.
+The results of the two above filtering steps are merged into a single variant
+matrix (VCF file) and the resulting variant matrix is filtered again.
+
+The following statements are true for all retained variants:
+- all variants are SNPs
+- all SNPs are bi-allelic
+- all SNPs have less than 10% of the genotypes with missing data
+- all SNPs have a mapping depth of at least 3
+- all SNPs have read quality score of at least 20
+- all SNPs have at least minor allele frequency of 0.05
+
+See script `./methods/merge_and_filter_public_and_untwist_vcfs.sh` for details.
 
 This produces the variant matrix file:
 `./results/all_public_and_all_untwist_SNP_filtered_NOT_LD_pruned.vcf.gz`
-that holds **2,719,667 SNPs**.
+that holds **To Do SNPs**.
 
 ##### Filtering out correlated SNPs
 
@@ -147,7 +150,7 @@ See script `./methods/filter_out_LD_correlated_SNPs.sh` for details on how
 `bcftools` (version 1.9) was used to filter out SNPs correlated to other
 positions with an `r^2 > 0.7` within a window of size 1,000 bp.
 
-After filtering **1,031,085 SNPs** remained. The result is stored in file
+After filtering **To Do SNPs** remained. The result is stored in file
 `./results/all_public_and_all_untwist_SNP_filtered.vcf.gz`.
 
 #### Complete Linkage Clustering based on identity by state (IBS) distances
