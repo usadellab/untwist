@@ -114,8 +114,8 @@ true for all retained variants:
 - all variants are SNPs
 - all SNPs are bi-allelic
 - all SNPs have less than 10% of the genotypes with missing data
-- all SNPs have a mapping depth of at least 3 (> 2)
-- all SNPs have read quality score of at least 20 (> 19)
+- all SNPs have a mapping depth of at least 3
+- all SNPs have read quality score of at least 20
 - all SNPs have at least minor allele frequency of 0.05
 
 Each input variant matrix is filtered seperately, see scripts:
