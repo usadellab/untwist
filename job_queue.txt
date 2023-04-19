@@ -1,6 +1,7 @@
 methods/filter_public_variants.sh
 methods/filter_untwist_variants.sh
 methods/merge_and_filter_public_and_untwist_vcfs.sh
+methods/filter_out_SNPs_with_exceeding_heterzygosity.sh
 methods/filter_out_LD_correlated_SNPs.sh
 methods/principal_component_analysis.sh
 methods/generate_IBS_and_allele_count_distances.sh

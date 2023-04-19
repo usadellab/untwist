@@ -134,7 +134,20 @@ See script `./methods/merge_and_filter_public_and_untwist_vcfs.sh` for details.
 
 This produces the variant matrix file:
 `./results/all_public_and_all_untwist_SNP_filtered_NOT_LD_pruned.vcf.gz`
-that holds **To Do SNPs**.
+that holds **2,306,926 SNPs**.
+
+##### Filtering out sites with high heterozygosity
+
+Sites where more than 50% of the samples (accessions) are heterozygous are
+excluded from the variant matrix (VCF file) by this filtering step.
+
+We use `vcffilterjs` to carry out this filtering. See script 
+```
+./methods/filter_out_SNPs_with_exceeding_heterzygosity.sh
+```
+This step produces the VCF file
+`./results/all_public_and_all_untwist_SNP_filtered_heterozygosity_NOT_LD_pruned.vcf.gz`
+which contains **1,286,444 SNPs**.
 
 ##### Filtering out correlated SNPs
 
@@ -150,7 +163,7 @@ See script `./methods/filter_out_LD_correlated_SNPs.sh` for details on how
 `bcftools` (version 1.9) was used to filter out SNPs correlated to other
 positions with an `r^2 > 0.7` within a window of size 1,000 bp.
 
-After filtering **To Do SNPs** remained. The result is stored in file
+After filtering **340,696 SNPs** remained. The result is stored in file
 `./results/all_public_and_all_untwist_SNP_filtered.vcf.gz`.
 
 #### Complete Linkage Clustering based on identity by state (IBS) distances
