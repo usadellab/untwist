@@ -6,20 +6,6 @@ Usadellab's contributions to the Untwist project.
 
 Go to `/mnt/data/asis/untwist` to find the local clone of this repository.
 
-## check genotypes
-
-UNT27 likely CAM174  
-UNT29 likely CAM25  
-UNT34 likely CAM134  
-UNT50 CAM147  
-UNT51 CAM150  
-UNT52 CAM156  
-UNT53 CAM159  
-UNT54 likely CAM165  
-UNT55 maybe CAM167  
-UNT56 CAM232  
-UNT57 CAM278  
-
 ## Directory structure
 
 This project has the following directory structure:
@@ -86,6 +72,21 @@ UNT49
 UNT51
 ```
 
+#### check genotypes
+
+UNT27 likely CAM174  
+UNT29 likely CAM25  
+UNT34 likely CAM134  
+UNT50 CAM147  
+UNT51 CAM150  
+UNT52 CAM156  
+UNT53 CAM159  
+UNT54 likely CAM165  
+UNT55 maybe CAM167  
+UNT56 CAM232  
+UNT57 CAM278  
+
+
 ### Methods
 
 This section describes step by step how the above material is processed to
@@ -100,22 +101,23 @@ for this information:
 * [1] `methods/filter_public_variants.sh`
 * [1] `methods/filter_untwist_variants.sh`
 * [2] `methods/merge_and_filter_public_and_untwist_vcfs.sh`
-* [3] `methods/filter_out_LD_correlated_SNPs.sh`
-* [4] `methods/principal_component_analysis.sh`
-* [4] `methods/generate_IBS_and_allele_count_distances.sh`
-* [4] `methods/generate_admixture_bed_input.sh`
-* [4] `methods/complete_linkage_clustering.sh`
-* [5] `methods/k_means_clustering.R`
-* [5] `methods/ibs_allele_cnt_distance_clustering.R`
-* [5] `methods/admixture_k3.sh`
-* [5] `methods/admixture_k4.sh`
-* [5] `methods/admixture_k5.sh`
-* [5] `methods/admixture_k6.sh`
-* [5] `methods/admixture_k7.sh`
-* [5] `methods/admixture_k8.sh`
-* [5] `methods/admixture_k9.sh`
-* [5] `methods/admixture_k10.sh`
-* [6] `methods/admixture_plots.R`
+* [3] `methods/filter_out_SNPs_with_exceeding_heterzygosity.sh`
+* [4] `methods/filter_out_LD_correlated_SNPs.sh`
+* [5] `methods/principal_component_analysis.sh`
+* [5] `methods/generate_IBS_and_allele_count_distances.sh`
+* [5] `methods/generate_admixture_bed_input.sh`
+* [5] `methods/complete_linkage_clustering.sh`
+* [6] `methods/k_means_clustering.R`
+* [6] `methods/ibs_allele_cnt_distance_clustering.R`
+* [6] `methods/admixture_k3.sh`
+* [6] `methods/admixture_k4.sh`
+* [6] `methods/admixture_k5.sh`
+* [6] `methods/admixture_k6.sh`
+* [6] `methods/admixture_k7.sh`
+* [6] `methods/admixture_k8.sh`
+* [6] `methods/admixture_k9.sh`
+* [6] `methods/admixture_k10.sh`
+* [7] `methods/admixture_plots.R`
 
 #### Generation of the variant matrix (VCF file)
 
