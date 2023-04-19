@@ -111,6 +111,11 @@ library(SNPRelate)
 #vcf.fn <- "all_public_and_all_untwist_SNP_filtered.vcf.gz"
 #snpgdsVCF2GDS(vcf.fn, "test.gds", method="biallelic.only")
 
+###Alternatively use filterd at max het 0.5 by Tassel
+vcf.fn <- "all_public_and_all_untwist_SNP_filtered_max05het.vcf.gz"
+snpgdsVCF2GDS(vcf.fn, "test_maxhet05.gds", method="biallelic.only")
+genofile <- snpgdsOpen("test_maxhet05.gds")
+
 genofile <- snpgdsOpen("test.gds")
 snpset <- snpgdsLDpruning(genofile, ld.threshold=0.2)
 
@@ -191,12 +196,13 @@ cor_cophenetic(tassel_hclust, tassel_filtered_hclust, method = "spearman")
 #############
 ####LD pruning not used
 #
-snpset <- snpgdsLDpruning(genofile, ld.threshold=0.4, autosome.only=FALSE)
+snpset <- snpgdsLDpruning(genofile, ld.threshold=0.9, autosome.only=FALSE)
 snp.id <- unlist(unname(snpset))
 x11()
 #try with LD pruning
 ibs.hc.f <- snpgdsHCluster(snpgdsIBS(genofile, num.thread=2, snp.id=snp.id , autosome.only=FALSE))
 rv.f <- snpgdsCutTree(ibs.hc.f)
+plot(rv.f$dend)
 
 ##########
 
