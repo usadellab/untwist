@@ -6,6 +6,20 @@ Usadellab's contributions to the Untwist project.
 
 Go to `/mnt/data/asis/untwist` to find the local clone of this repository.
 
+## check genotypes
+
+UNT27 likely CAM174  
+UNT29 likely CAM25  
+UNT34 likely CAM134  
+UNT50 CAM147  
+UNT51 CAM150  
+UNT52 CAM156  
+UNT53 CAM159  
+UNT54 likely CAM165  
+UNT55 maybe CAM167  
+UNT56 CAM232  
+UNT57 CAM278  
+
 ## Directory structure
 
 This project has the following directory structure:
