@@ -46,4 +46,5 @@ plot(
 )
 text(x = unt_coords[, 1], y = unt_coords[, 2], labels = unt_labels, 
   col = unt_col, cex = unt_cex)
+legend("topright", fill=col_pal[1:2], legend=c("(U)ntwist", "Publi(C)"), title="Type of Camelina accessions")
 dev.off()
