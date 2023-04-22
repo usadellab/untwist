@@ -17,7 +17,7 @@ unt_eigenvecs <- read.table(
 )
 #' Extract a table with _only_ the eigenvectors and rownames being the
 #' accession identifiers:
-unt_coords <- unt_eigenvecs[ ,colnames(unt_eigenvecs)[grepl("^PC\\d+$", colnames(unt_eigenvecs))]]
+unt_coords <- unt_eigenvecs[, colnames(unt_eigenvecs)[grepl("^PC\\d+$", colnames(unt_eigenvecs))]]
 rownames(unt_coords) <- unt_eigenvecs$IID
 
 unt_cex <- unlist(lapply(rownames(unt_coords), function(accession_id) {
@@ -35,8 +35,10 @@ unt_col <- unlist(lapply(rownames(unt_coords), function(accession_id) {
     col_pal[[2]]
   }
 }))
-unt_labels <- sub("_(reseq|new)$", "",
-  sub("^CAMPUB", "C", sub("^UNT", "U", rownames(unt_coords))))
+unt_labels <- sub(
+  "_(reseq|new)$", "",
+  sub("^CAMPUB", "C", sub("^UNT", "U", rownames(unt_coords)))
+)
 pdf(paste0("./results/principal_component_scatterplot.pdf"))
 plot(
   x = unt_coords[, 1], y = unt_coords[, 2], type = "n",
@@ -44,7 +46,13 @@ plot(
   xlab = "1st principal component",
   ylab = "2nd principal component"
 )
-text(x = unt_coords[, 1], y = unt_coords[, 2], labels = unt_labels, 
-  col = unt_col, cex = unt_cex)
-legend("topright", fill=col_pal[1:2], legend=c("(U)ntwist", "Publi(C)"), title="Type of Camelina accessions")
+text(
+  x = unt_coords[, 1], y = unt_coords[, 2], labels = unt_labels,
+  col = unt_col, cex = unt_cex
+)
+legend("topleft",
+  fill = col_pal[1:2],
+  legend = c("(U)ntwist", "Publi(C)"), title = "Type of Camelina accessions",
+  cex=0.6125, bty = "n"
+)
 dev.off()
