@@ -133,7 +133,7 @@ For details see scripts:
 - `methods/filter_public_variants.sh`
 - `methods/filter_untwist_variants.sh`
 
-##### Merg public and Untwist variant matrices and filter the result
+##### Merge public and Untwist variant matrices and filter the result
 
 The results of the two above filtering steps are merged into a single variant
 matrix (VCF file) and the resulting variant matrix is filtered again.
