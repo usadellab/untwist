@@ -107,6 +107,7 @@ for this information:
 * [5] `methods/generate_IBS_and_allele_count_distances.sh`
 * [5] `methods/generate_admixture_bed_input.sh`
 * [5] `methods/complete_linkage_clustering.sh`
+* [5] `methods/calculate_Fst.sh`
 * [6] `methods/k_means_clustering.R`
 * [6] `methods/ibs_allele_cnt_distance_clustering.R`
 * [6] `methods/admixture_k3.sh`
@@ -336,3 +337,17 @@ results/all_public_and_all_untwist_SNP_filtered_admixture_k6_result_table.tsv
 The script generates a scattter plot of the cross validation error (y-axis)
 depending on the assumed number of populations _k_ (x-axis):
 `./results/all_public_and_all_untwist_SNP_filtered_admixture_cv_error_scatter_plot.pdf`
+
+#### Calculate the F-statistics
+
+F-statistics and their calculation has been well defined in "Weir BS, Cockerham
+CC (1984) Estimating F-statistics for the analysis of population structure".
+vcftools implement this method.
+
+We want to infer whether the genetic variability of the Untwist lines matches
+the variability of the public lines.
+
+In order to achieve this, we calculate the F-statistics using vcftools.
+
+See file `./methods/calculate_Fst.sh` for details. The job creates the output
+file `./results/mean_Fst.txt`.
