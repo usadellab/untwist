@@ -1,0 +1,1 @@
+Mean Fst for all sites, comparing Untwist with public lines:	0.0363625287928026
