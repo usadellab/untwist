@@ -28,4 +28,5 @@ plot(
   main = "Weir and Cockerham F_st",
   lwd = 5, cex.axis = 1.5, cex.main = 1.5, cex = 1.5
 )
+abline(v = 0, col = "brown", lwd = 2)
 dev.off()
