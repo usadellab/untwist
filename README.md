@@ -258,6 +258,13 @@ This step produces:
 Note that the matrix accession eigenvectors is stored in 
 `./results/all_public_and_all_untwist_SNP_filtered_pca.eigenvec`.
 
+##### Plot the PCA results
+
+We use R to generate a scatterplot to visualize the results of the SNP based
+principal component analysis. Use the R-script
+`./methods/visualize_pca_results.R` for this. The resulting plot is stored in
+`./results/principal_component_scatterplot.pdf`.
+
 ##### k-means clustering
 
 k-means clustering was executed in `R` using the script
