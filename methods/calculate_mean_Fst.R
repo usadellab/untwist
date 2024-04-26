@@ -20,3 +20,12 @@ writeLines(
   ),
   "./results/mean_Fst.txt"
 )
+
+#' Plot the results into a density plot:
+pdf("./results/Fst_density_plot.pdf")
+plot(
+  density(x),
+  main = "Weir and Cockerham F_st",
+  lwd = 5, cex.axis = 1.5, cex.main = 1.5, cex = 1.5
+)
+dev.off()
