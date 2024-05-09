@@ -1,10 +1,17 @@
 # untwist
 
-Usadellab's contributions to the Untwist project.
+Population genetics of the _Camelina sativa_ lines studied in the "Untwist"
+project".
 
-## Project location on the IBG-4 cluster
+## Data and Code Availability
 
-Go to `/mnt/data/asis/untwist` to find the local clone of this repository.
+All code is contained in this git repository. Because the material (data) is
+contained in large files these cannot be included. Please write to the authors
+with affiliation to the Forschungszentrum Jülich (FZJ) to obtain the data
+files. For FZJ researches please look at the file
+`./material/data_and_code_availability.txt` for the physical directory in which
+to find the local copy of this repository _including_ the material (data)
+files.
 
 ## Directory structure
 

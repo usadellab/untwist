@@ -1,4 +1,7 @@
 material/*
+!material/data_and_code_availability.txt
+!material/untwist_lines_accessions.txt
+
 results/*
 !results/*.pdf
 !results/*.tsv

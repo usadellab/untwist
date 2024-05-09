@@ -1,0 +1,6 @@
+All data and code is stored on the compute cluster of the Forschungszentrum
+Jülich, Institute of Bio- and Geosciences (IBG), Bioinformatics (IBG-4).
+
+There all code regarding the population genetics analysis is stored in this
+directory:
+`/mnt/data/asis/untwist`.
