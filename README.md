@@ -22,14 +22,18 @@ This project has the following directory structure:
 - results
 ```
 
-Note that `material` and `results` are ignored by git, because they contain
-sensitive data and extremely large files. You'll find the files in the local
-clone, i.e. in the above directory on our IBG-4 cluster.
+Note that most files in the directories `material` and `results` are ignored by
+git, because they contain sensitive data and or or extremely large files.
+You'll find the files in the local clone, i.e. in the above directory on our
+IBG-4 cluster (see section [Data and Code
+Availability](#data-and-code-availability)).
 
 ## Population Structure Analysis
 
-Identification of populations and assignment to them of public and Untwist
-Camelina accessions is the goal of this sub-project.
+In this section you find how we identified populations and assigned _Camelina
+sativa_ lines studied in the Untwist research project to them. The respective
+genomes were either generated within the Untwist research project or extracted
+from [1] (see [References](#references)).
 
 ### Material
 
@@ -37,62 +41,29 @@ Camelina accessions is the goal of this sub-project.
 
 ##### The variant matrix (VCF)
 
-We use only single nucleotide polymorphisms (SNPs) in the form of a variant
-matrix (VCF file). It is generated from two VCF input files, which have been
-generated and provided by Ashraf.
+In this population genetics analysis we used variants identified by the
+sequencing group. Those variants were filtered. We use only single nucleotide
+polymorphisms (SNPs) in the form of a variant matrix (VCF file). It is
+generated from two VCF input files, which have been generated and provided by
+the sequencing sub-group.
 
 The step-by-step generation is described in methods. The final VCF matrix used
 by all analysis is `./results/all_public_and_all_untwist_SNP_filtered.vcf.gz`.
 
-Two of Ashraf's input variant matrices are used in this procedure:
+Two variant matrices are used that were generated for (a) public _Camelina
+sativa_ lines (see reference [1]) and (b) lines generated within the Untwist
+research project. The files are in the FZJ's _local_ material directory and are
+available upon request. See `material/data_and_code_availability.txt` for
+details on their respective storage locations.
 ```
-NC_all_gatk_CAM_casom_CAMPUB223_54UNT.vcf ->
-  /mnt/data/achraf/sequenced_samples/runs/pipe_20210803_UNTWIST/013_gathervcfs_c-CAM_casom_CAMPUB223_54UNT/NC_all_gatk_CAM_casom_CAMPUB223_54UNT.vcf
-NC_all_gatk_UNT_check_all_reseq.vcf ->
-  /mnt/data/achraf/sequenced_samples/runs/pipe_20210803_UNTWIST/013_gathervcfs_UNT_check_all_reseq/NC_all_gatk_UNT_check_all_reseq.vcf
-```
-
-##### Untwist lines not present in current variant matrix
-
-Ata's script uses a list of Untwist accessions to be kept when filtering with
-`bcftools`. This list is used to find which Untwist lines are missing variant
-data. A list of all Untwist lines has been provided by Björn Usadel
-(`./material/unt_lines.md`).
-
-Generate a list that can be compared with the above list of all Untwist lines:
-```sh
-cd /mnt/data/ata/UNTWIST_NEW/UNT_PUBLICATION_RICHARD
-sed -e 's/_//' -e 's/_\S\+$//' -e 's/0\+//' UNTWISTsamples.txt | sort > /mnt/data/asis/untwist/material/unt_lines_in_Atas_VCF.md
+(a) NC_all_gatk_CAM_casom_CAMPUB223_54UNT.vcf
+(b) NC_all_gatk_UNT_check_all_reseq.vcf
 ```
 
-Then build the set difference:
-```sh
-comm -3 <(sort material/unt_lines.md) material/unt_lines_in_Atas_VCF.md
-```
-The above command produces the result of five Untwist lines not present in the
-variant data:
-```
-UNT36
-UNT41
-UNT48
-UNT49
-UNT51
-```
-
-#### check genotypes
-
-UNT27 likely CAM174  
-UNT29 likely CAM25  
-UNT34 likely CAM134  
-UNT50 CAM147  
-UNT51 CAM150  
-UNT52 CAM156  
-UNT53 CAM159  
-UNT54 likely CAM165  
-UNT55 maybe CAM167  
-UNT56 CAM232  
-UNT57 CAM278  
-
+Find a list of all _Camelina sativa_ lines used in this population genetics
+analysis in the file `./material/untwist_lines_accessions.txt`. Note that at
+the time of carrying out the population genetics analysis a few lines were
+still underoing sequencing and thus are not present.
 
 ### Methods
 
@@ -129,19 +100,19 @@ for this information:
 
 #### Generation of the variant matrix (VCF file)
 
-See materials for the two input VCF matrix files provided by Ashraf.
+See materials for the two input VCF matrix files provided by the sequencing subgroup.
 
 ##### Filtering out low quality SNPs and other variants
 
 The input variant matrices are filtered, so that the resulting variant matrices
-(VCF files) contain only the samples, we are allowed to analyze and publish.
+(VCF files) contain only desired _Camelina sativa_ lines.
 
 For details see scripts:
 
 - `methods/filter_public_variants.sh`
 - `methods/filter_untwist_variants.sh`
 
-##### Merge public and Untwist variant matrices and filter the result
+##### Merge public (see reference [1]) and Untwist variant matrices and filter the result
 
 The results of the two above filtering steps are merged into a single variant
 matrix (VCF file) and the resulting variant matrix is filtered again.
@@ -339,7 +310,7 @@ a typical Admixture barplot.
 
 The ADMIXTURE results are saved as tables, where the first column is the
 accession identifier and the later columns hold the respective accession
-genomes' percentage coming from the column ancestra population:
+genomes' percentage coming from the column ancestor population:
 ```
 results/all_public_and_all_untwist_SNP_filtered_admixture_k3_result_table.tsv
 results/all_public_and_all_untwist_SNP_filtered_admixture_k4_result_table.tsv
@@ -348,7 +319,7 @@ results/all_public_and_all_untwist_SNP_filtered_admixture_k6_result_table.tsv
 [...]
 ```
 
-The script generates a scattter plot of the cross validation error (y-axis)
+The script generates a scatter plot of the cross validation error (y-axis)
 depending on the assumed number of populations _k_ (x-axis):
 `./results/all_public_and_all_untwist_SNP_filtered_admixture_cv_error_scatter_plot.pdf`
 
@@ -365,3 +336,11 @@ In order to achieve this, we calculate the F-statistics using vcftools.
 
 See file `./methods/calculate_Fst.sh` for details. The job creates the output
 file `./results/mean_Fst.txt`.
+
+## References
+
+[1] Li, H., Hu, X., Lovell, J. T., Grabowski, P. P., Mamidi, S., Chen, C.,
+Amirebrahimi, M., Kahanda, I., Mumey, B., Barry, K., Kudrna, D., Schmutz, J.,
+Lachowiec, J., & Lu, C. (2021). Genetic dissection of natural variation in
+oilseed traits of camelina by whole-genome resequencing and QTL mapping. The
+Plant Genome, 14(2), e20110. https://doi.org/10.1002/tpg2.20110

@@ -1,0 +1,17 @@
+All data and code is stored on the compute cluster of the Forschungszentrum
+Jülich, Institute of Bio- and Geosciences (IBG), Bioinformatics (IBG-4).
+
+There all code regarding the population genetics analysis is stored in this
+directory:
+`/mnt/data/asis/untwist`.
+
+The variant call format matrices for the public and Untwist project _Camelina
+sativa_ lines are stored in the Forschugnszentrum Jülich, IBG-4 compute cluster
+under these locations:
+```sh
+./material/NC_all_gatk_CAM_casom_CAMPUB223_54UNT.vcf ->
+  /mnt/data/achraf/sequenced_samples/runs/pipe_20210803_UNTWIST/013_gathervcfs_c-CAM_casom_CAMPUB223_54UNT/NC_all_gatk_CAM_casom_CAMPUB223_54UNT.vcf
+./material/NC_all_gatk_UNT_check_all_reseq.vcf ->
+  /mnt/data/achraf/sequenced_samples/runs/pipe_20210803_UNTWIST/013_gathervcfs_UNT_check_all_reseq/NC_all_gatk_UNT_check_all_reseq.vcf
+```
+Note that the files are symbolic links (Linux).
