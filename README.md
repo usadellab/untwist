@@ -1,7 +1,7 @@
-# untwist
+# Untwist
 
 Population genetics of the _Camelina sativa_ lines studied in the "Untwist"
-project".
+project.
 
 ## Data and Code Availability
 
@@ -23,7 +23,7 @@ This project has the following directory structure:
 ```
 
 Note that most files in the directories `material` and `results` are ignored by
-git, because they contain sensitive data and or or extremely large files.
+git, because they contain sensitive data and/or extremely large files.
 You'll find the files in the local clone, i.e. in the above directory on our
 IBG-4 cluster (see section [Data and Code
 Availability](#data-and-code-availability)).
@@ -37,7 +37,7 @@ from [1] (see [References](#references)).
 
 ### Material
 
-#### Merged public and untwist resequencing genomic variant data ("Ata's data")
+#### Merged public and Untwist resequencing genomic variant data ("Ata's data")
 
 ##### The variant matrix (VCF)
 
