@@ -243,6 +243,16 @@ principal component analysis. Use the R-script
 `./methods/visualize_pca_results.R` for this. The resulting plot is stored in
 `./results/principal_component_scatterplot.pdf`.
 
+###### Convert plots to JPG for the publication
+
+Upon request we convert the PCA plot to JPG for publication using the following
+command:
+```sh
+convert -density 600 -trim \
+  results/principal_component_scatterplot.pdf \
+  -quality 100 results/principal_component_scatterplot.jpg
+```
+
 ##### k-means clustering
 
 k-means clustering was executed in `R` using the script
@@ -322,6 +332,16 @@ results/all_public_and_all_untwist_SNP_filtered_admixture_k6_result_table.tsv
 The script generates a scatter plot of the cross validation error (y-axis)
 depending on the assumed number of populations _k_ (x-axis):
 `./results/all_public_and_all_untwist_SNP_filtered_admixture_cv_error_scatter_plot.pdf`
+
+###### Convert plots to JPG for the publication
+
+Upon request we convert the above `*admixture_k*_barplot_IBS_hclust.pdf` to JPG
+using the following command:
+```sh
+convert -density 600 -trim \
+  results/all_public_and_all_untwist_SNP_filtered_admixture_k8_barplot_IBS_hclust.pdf \
+  -quality 100 results/all_public_and_all_untwist_SNP_filtered_admixture_k8_barplot_IBS_hclust.jpg
+```
 
 #### Calculate the F-statistics
 

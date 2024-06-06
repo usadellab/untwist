@@ -4,6 +4,7 @@ material/*
 
 results/*
 !results/*.pdf
+!results/*.jpg
 !results/*.tsv
 !results/*.newick
 !results/*.Q
