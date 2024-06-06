@@ -1,5 +1,6 @@
 require(RColorBrewer)
 require(dendextend)
+require(ape)
 
 #' Set working directory
 if (dir.exists("/mnt/data/asis/untwist/")) {
@@ -122,4 +123,12 @@ for (k in admxtr_cv_errs[, "k"]) {
   par(mar = c(3, 4.1, 4.1, 2.1))
   plot(unt_dend, xlab = "", sub = "", cex = 0.5)
   dev.off()
+
+  #' Save the above dendrogam as Newick file, for further processing:
+  write.tree(
+    as.phylo(unt_dend), paste0(
+      "./results/all_public_and_all_untwist_SNP_filtered_admixture_k",
+      k, "_JUST_IBS_hclust.newick"
+    )
+  )
 }
