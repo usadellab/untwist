@@ -333,6 +333,19 @@ The script generates a scatter plot of the cross validation error (y-axis)
 depending on the assumed number of populations _k_ (x-axis):
 `./results/all_public_and_all_untwist_SNP_filtered_admixture_cv_error_scatter_plot.pdf`
 
+###### Provide the dendrograms in Newick format
+
+The above script `./methods/admixture_plots.R` produces two trees (dendrograms)
+as output per paramater value for `k`. These dendrograms have been requested
+for further figures for the publication. The first dendrogram includes _all_
+lines analyzed in this project, the second only the Untwist lines. The leaves
+are sorted to match the admixture clusters. As topology identity is concerned
+they are _all_ identical.
+
+For _k_ = 8 the resulting respective dendrograms are:
+- `./results/all_public_and_all_untwist_SNP_filtered_admixture_k8_JUST_IBS_hclust.newick` and
+- `./results/all_public_and_all_untwist_SNP_filtered_admixture_k8_JUST_IBS_hclust_ONLY_Untwist_Lines.newick`
+
 ###### Convert plots to JPG for the publication
 
 Upon request we convert the above `*admixture_k*_barplot_IBS_hclust.pdf` to JPG

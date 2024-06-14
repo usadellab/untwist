@@ -125,10 +125,20 @@ for (k in admxtr_cv_errs[, "k"]) {
   dev.off()
 
   #' Save the above dendrogam as Newick file, for further processing:
+
+  #' Drop the tips of the non project lines, i.e. drop all public lines, but
+  #' retain the topology. And finally store that tree.
+  phylo_tree <- as.phylo(unt_dend)
+  unt_tree <- drop.tip(
+    phylo_tree,
+    phylo_tree$tip.label[
+      grepl("^CAMPUB_", phylo_tree$tip.label)
+    ]
+  )
   write.tree(
-    as.phylo(unt_dend), paste0(
+    unt_tree, paste0(
       "./results/all_public_and_all_untwist_SNP_filtered_admixture_k",
-      k, "_JUST_IBS_hclust.newick"
+      k, "_JUST_IBS_hclust_ONLY_Untwist_Lines.newick"
     )
   )
 }
