@@ -1,6 +1,7 @@
 require(RColorBrewer)
 require(dendextend)
 require(ape)
+require(bnpsd)
 
 #' Set working directory
 if (dir.exists("/mnt/data/asis/untwist/")) {
@@ -46,18 +47,31 @@ unt_accession_names <- sub(
     "results/all_public_and_all_untwist_SNP_filtered.mdist.id"
   )
 )
+#' "Sanitize" the names of the Untwist accessions (lines):
+message(
+  "Removing trailing '_new' and '_reseq' from the names of Untwist accessions.\n",
+  "Uncomment the respective line, if this is not desired."
+)
+#' Sanitize the names for hierarchcical clustering:
+unt_accession_names <- sub(
+  "(_new|_reseq)$", "", unt_accession_names
+)
 rownames(unt_1_min_ibs_mtrx) <- unt_accession_names
+#' Read in accession names and sanitize them for the ADMIXTURE barplot:
+admxtr_unt_accs <- sub(
+  "(_new|_reseq)$", "",
+  read.table(
+    "./results/all_public_and_all_untwist_SNP_filtered.fam",
+    stringsAsFactors = FALSE
+  )[[1]]
+)
+
 
 #' hclust
 unt_hclust <- hclust(as.dist(unt_1_min_ibs_mtrx), method = "average")
 
 
 #' Plot Admixture results as barplot for each k:
-admxtr_unt_accs <- read.table(
-  "./results/all_public_and_all_untwist_SNP_filtered.fam",
-  stringsAsFactors = FALSE
-)[[1]]
-
 for (k in admxtr_cv_errs[, "k"]) {
   #' Read in Admixture results for current k:
   admxtr_tbl_k <- read.table(paste0(
@@ -119,9 +133,23 @@ for (k in admxtr_cv_errs[, "k"]) {
     ),
     width = 21, height = 7
   )
-  old_par <- par(old_par)
   par(mar = c(3, 4.1, 4.1, 2.1))
-  plot(unt_dend, xlab = "", sub = "", cex = 0.5)
+  #' Invert the dendrogram, so that the tree grows from the bottom of the plot
+  #' upwards, while the leaf labels are on the top. This is achieved by
+  #' inverting the ylim arg values in plot and ommiting the xaxt. Then the
+  #' labels are drawn manually with mtext.
+  plot(
+    unt_dend,
+    xaxt = "n", sub = "", cex = 0.5, leaflab = "none",
+    ylim = c(attr(unt_dend, "height"), 0.0)
+  )
+  mtext(
+    labels(unt_dend),
+    side = 3,
+    at = seq(1, length(labels(unt_dend))),
+    las = 2, cex = 0.5, col = unt_accs_cols
+  )
+  par(old_par)
   dev.off()
 
   #' Save the above dendrogam as Newick file, for further processing:
@@ -129,6 +157,9 @@ for (k in admxtr_cv_errs[, "k"]) {
   #' Drop the tips of the non project lines, i.e. drop all public lines, but
   #' retain the topology. And finally store that tree.
   phylo_tree <- as.phylo(unt_dend)
+  #' Maintain the order as in the hierarchical clustering dendrogram:
+  unt_hclust$labels[unt_hclust$order]
+
   unt_tree <- drop.tip(
     phylo_tree,
     phylo_tree$tip.label[
@@ -139,6 +170,40 @@ for (k in admxtr_cv_errs[, "k"]) {
     unt_tree, paste0(
       "./results/all_public_and_all_untwist_SNP_filtered_admixture_k",
       k, "_JUST_IBS_hclust_ONLY_Untwist_Lines.newick"
+    )
+  )
+
+  #' And plot the dendrogram in which only the Untwist lines appear, i.e. where
+  #' the public lines have been removed from:
+  fln <- paste0(
+    "./results/all_public_and_all_untwist_SNP_filtered_admixture_k",
+    k, "_JUST_IBS_hclust_ONLY_Untwist_Lines.pdf"
+  )
+  pdf(fln, width = 21, height = 7)
+  par(mar = c(3, 4.1, 4.1, 2.1))
+  #' Invert the dendrogram, so that the tree grows from the bottom of the plot
+  #' upwards, while the leaf labels are on the top. This is achieved by
+  #' inverting the ylim arg values in plot and ommiting the xaxt. Then the
+  #' labels are drawn manually with mtext.
+  unt_dend_no_publ_lns <- as.dendrogram(unt_tree)
+  plot(
+    unt_dend_no_publ_lns,
+    xaxt = "n", sub = "", cex = 0.5, leaflab = "none",
+    ylim = c(attr(unt_dend_no_publ_lns, "height"), 0.0)
+  )
+  mtext(
+    labels(unt_dend_no_publ_lns),
+    side = 3,
+    at = seq(1, length(labels(unt_dend_no_publ_lns))),
+    las = 2, cex = 1.0, col = unt_accs_cols[[1]]
+  )
+  par(old_par)
+  dev.off()
+  #' Convert to high quality JPG for publication:
+  system(
+    paste(
+      "convert -density 600 -trim",
+      fln, "-quality 100", sub("\\.pdf$", ".jpg", fln)
     )
   )
 }
