@@ -1,7 +1,6 @@
 require(RColorBrewer)
 require(dendextend)
 require(ape)
-require(bnpsd)
 
 #' Set working directory
 if (dir.exists("/mnt/data/asis/untwist/")) {
@@ -104,13 +103,11 @@ for (k in admxtr_cv_errs[, "k"]) {
   unt_dend <- as.dendrogram(unt_hclust)
   labels_colors(unt_dend) <- unt_accs_cols
   labels_cex(unt_dend) <- 0.5
-  pdf(
-    paste0(
-      "./results/all_public_and_all_untwist_SNP_filtered_admixture_k",
-      k, "_barplot_IBS_hclust.pdf"
-    ),
-    width = 21, height = 7
+  fln <- paste0(
+    "./results/all_public_and_all_untwist_SNP_filtered_admixture_k",
+    k, "_barplot_IBS_hclust.pdf"
   )
+  pdf(fln, width = 21, height = 7)
   old_par <- par(mfrow = 2:1)
   par(mar = c(3, 4.1, 4.1, 2.1))
   plot(unt_dend, xlab = "", sub = "", cex = 0.5)
@@ -125,12 +122,21 @@ for (k in admxtr_cv_errs[, "k"]) {
   )
   dev.off()
 
+  #' Convert to high quality JPG for publication:
+  system(
+    paste(
+      "convert -density 600 -trim",
+      fln, "-quality 100", sub("\\.pdf$", ".jpg", fln)
+    )
+  )
+
   #' Plot JUST the dendogram for our partners:
+  fln <- paste0(
+    "./results/all_public_and_all_untwist_SNP_filtered_admixture_k",
+    k, "_JUST_IBS_hclust.pdf"
+  )
   pdf(
-    paste0(
-      "./results/all_public_and_all_untwist_SNP_filtered_admixture_k",
-      k, "_JUST_IBS_hclust.pdf"
-    ),
+    fln,
     width = 21, height = 7
   )
   par(mar = c(3, 4.1, 4.1, 2.1))
@@ -152,26 +158,57 @@ for (k in admxtr_cv_errs[, "k"]) {
   par(old_par)
   dev.off()
 
-  #' Save the above dendrogam as Newick file, for further processing:
+  #' Convert to high quality JPG for publication:
+  system(
+    paste(
+      "convert -density 600 -trim",
+      fln, "-quality 100", sub("\\.pdf$", ".jpg", fln)
+    )
+  )
 
-  #' Drop the tips of the non project lines, i.e. drop all public lines, but
-  #' retain the topology. And finally store that tree.
+  #' Save the above dendrogam as Newick file, for further processing:
   phylo_tree <- as.phylo(unt_dend)
   #' Maintain the order as in the hierarchical clustering dendrogram:
   unt_hclust$labels[unt_hclust$order]
+  fln <- paste0(
+    "./results/all_public_and_all_untwist_SNP_filtered_admixture_k",
+    k, "_JUST_IBS_hclust.newick"
+  )
+  write.tree(phylo_tree, fln)
 
+  #' Convert to text-plot for easy insepction and search:
+  system(
+    paste(
+      "gotree draw text --with-node-labels -w 100 <",
+      fln, ">", sub("\\.newick", ".txt", fln)
+    )
+  )
+
+
+  #' Drop the tips of the non project lines, i.e. drop all public lines, but
+  #' retain the topology. And finally store that tree.
   unt_tree <- drop.tip(
     phylo_tree,
     phylo_tree$tip.label[
       grepl("^CAMPUB_", phylo_tree$tip.label)
     ]
   )
+  fln <- paste0(
+    "./results/all_public_and_all_untwist_SNP_filtered_admixture_k",
+    k, "_JUST_IBS_hclust_ONLY_Untwist_Lines.newick"
+  )
   write.tree(
-    unt_tree, paste0(
-      "./results/all_public_and_all_untwist_SNP_filtered_admixture_k",
-      k, "_JUST_IBS_hclust_ONLY_Untwist_Lines.newick"
+    unt_tree, fln
+  )
+
+  #' Convert to text-plot for easy insepction and search:
+  system(
+    paste(
+      "gotree draw text --with-node-labels -w 100 <",
+      fln, ">", sub("\\.newick", ".txt", fln)
     )
   )
+
 
   #' And plot the dendrogram in which only the Untwist lines appear, i.e. where
   #' the public lines have been removed from:
