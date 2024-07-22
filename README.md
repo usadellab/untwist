@@ -144,6 +144,47 @@ This step produces the VCF file
 `./results/all_public_and_all_untwist_SNP_filtered_heterozygosity_NOT_LD_pruned.vcf.gz`
 which contains **1,286,444 SNPs**.
 
+###### Alternative method to filter out sites with exceeding heterozygosity
+
+We used a Java based method (see above). One could use `vcftools` for this
+filtering step. Here, we explain how this _could_ be done.
+
+Using `bcftools` and `awk` you can count the number of heterozygous samples per site:
+```sh
+paste <(bcftools view 1000Genomes.Norm.bcf |\
+    awk -F"\t" 'BEGIN {print "CHR\tPOS\tID\tREF\tALT"} \
+      !/^#/ {print $1"\t"$2"\t"$3"\t"$4"\t"$5}') \
+    \
+  <(bcftools query -f '[\t%SAMPLE=%GT]\n' 1000Genomes.Norm.bcf |\
+    awk 'BEGIN {print "nHet"} {print gsub(/0\|1|1\|0|0\/1|1\/0/, "")}')
+```
+Note the `bcftools query -f '[\t%SAMPLE=%GT]\n'` which calculates the
+frequencies of the (reference) genotype at each site.
+
+The above produces an output like:
+```
+CHR POS ID  REF ALT nHet
+1   10177   rs367896724 A   AC  1490
+1   10235   rs540431307 T   TA  6
+1   10352   rs555500075 T   TA  2025
+1   10505   rs548419688 A   T   1
+1   10506   rs568405545 C   G   1
+1   10511   rs534229142 G   A   1
+1   10539   rs537182016 C   A   3
+1   10542   rs572818783 C   T   1
+1   10579   rs538322974 C   A   1
+1   10616   rs376342519 CCGCCGTTGCAAAGGCGCGCCG  C   35
+```
+
+See [this post on Biostars](https://www.biostars.org/p/291147/).
+
+Note, the following site remark. You can calculate the observed and expected
+homo- and heterozygosities for each individual using `vcftools`:
+```sh
+vcftools --vcf input.vcf --het --out output.het
+```
+See [this explanation](https://www.biostars.org/p/266502/).
+
 ##### Filtering out correlated SNPs
 
 Linkage disequilibrium (LD) is a population-based parameter that describes the
@@ -156,10 +197,22 @@ out SNPs that are highly correlated.
 
 See script `./methods/filter_out_LD_correlated_SNPs.sh` for details on how
 `bcftools` (version 1.9) was used to filter out SNPs correlated to other
-positions with an `r^2 > 0.7` within a window of size 1,000 bp.
+positions with an `r^2 > 0.9` within a window of size 10,000 bp.
 
 After filtering **340,696 SNPs** remained. The result is stored in file
 `./results/all_public_and_all_untwist_SNP_filtered.vcf.gz`.
+
+##### Differences of our marker (site) filtering to Li et al.[1]
+
+Li et al [1] used the following filters for SNP sites:
+- retain biallelic SNPs,
+- with missing data <10%,
+- and heterozygosity <0.5,
+- linkage disequilibrium (LD) r^2 < 0.4,
+- allele frequencies (MAF) >0.1.
+
+We used a minor allele frequency cutoff value of 0.05 and also retained markers
+where the r^2 was <= 0.9.
 
 #### Complete Linkage Clustering based on identity by state (IBS) distances
 
