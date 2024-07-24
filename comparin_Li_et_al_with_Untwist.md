@@ -2,7 +2,9 @@
 title: |
     | Comparison of the population genetics results
     | produced by Li et al. and the Untwist project
-author: Asis Hallab
+author: |
+    | Asis Hallab, Institute of Bio- and Geosciences (IBG), 
+    | Bioinformatics (IBG-4), Forschungszentrum Jülich
 date: July 23rd 2024
 geometry: margin=2.5cm
 numbersections: true
@@ -34,11 +36,11 @@ in both pipelines are briefly discussed.
 
 * We test for linkage disequilibrium in a window of 10kb, while Li et al. do
   not provide any information on this. However, they measure the distance at
-  which the maximum R^2 is halved to be 593 kb. Whether they used this value as
-  a window for the LD correlation filtering remains unclear. The value seems a
-  bit large to have been used in the filtering, as it has been assessed within
-  the context of the Quantitative Trait Loci (QTL) analysis and is used in it
-  as a parameter.
+  which the maximum $R^2$ is halved to be 593 kb. Whether they used this value
+  as a window for the LD correlation filtering remains unclear. The value seems
+  a bit large to have been used in the filtering, as it has been assessed
+  within the context of the Quantitative Trait Loci (QTL) analysis and is used
+  in it as a parameter.
 
 * We still allow a correlation between markers <= 0.9, while Li et al. set the
   cutoff at 0.4.
@@ -59,6 +61,11 @@ The iterative adjustment of these filtering parameters produced intermediate
 results and plots.
 
 ## Comparison of intermediate and final ADMIXTURE and hierarchical clustering results 
+
+![Intermediate ADMIXTURE and genetic clustering dendrogram](./results/)
+
+![Final ADMIXTURE and genetic clustering
+dendrogram](./results/all_public_and_all_untwist_SNP_filtered_admixture_k8_barplot_IBS_hclust.pdf)
 
 # Methods, Data, and scientific plot availability
 
