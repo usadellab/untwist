@@ -2,9 +2,7 @@
 title: |
     | Comparison of the population genetics results
     | produced by Li et al. and the Untwist project
-author: |
-    | Asis Hallab, Institute of Bio- and Geosciences (IBG), 
-    | Bioinformatics (IBG-4), Forschungszentrum Jülich
+author: Asis Hallab
 date: July 23rd 2024
 geometry: margin=2.5cm
 numbersections: true
@@ -36,11 +34,11 @@ in both pipelines are briefly discussed.
 
 * We test for linkage disequilibrium in a window of 10kb, while Li et al. do
   not provide any information on this. However, they measure the distance at
-  which the maximum $R^2$ is halved to be 593 kb. Whether they used this value
-  as a window for the LD correlation filtering remains unclear. The value seems
-  a bit large to have been used in the filtering, as it has been assessed
-  within the context of the Quantitative Trait Loci (QTL) analysis and is used
-  in it as a parameter.
+  which the maximum R^2 is halved to be 593 kb. Whether they used this value as
+  a window for the LD correlation filtering remains unclear. The value seems a
+  bit large to have been used in the filtering, as it has been assessed within
+  the context of the Quantitative Trait Loci (QTL) analysis and is used in it
+  as a parameter.
 
 * We still allow a correlation between markers <= 0.9, while Li et al. set the
   cutoff at 0.4.
@@ -62,10 +60,14 @@ results and plots.
 
 ## Comparison of intermediate and final ADMIXTURE and hierarchical clustering results 
 
-![Intermediate ADMIXTURE and genetic clustering dendrogram](./results/)
+A slight differences between the ADMIXTURE and genetic similarity dendrogram
+generated _before_ and _after_ filtering out markers (sites) with high
+heterozygosity. See figures one and two.
 
-![Final ADMIXTURE and genetic clustering
-dendrogram](./results/all_public_and_all_untwist_SNP_filtered_admixture_k8_barplot_IBS_hclust.pdf)
+![ADMIXTURE and genetic similarity dendrogram plot _before_ filtering out sites with high heterozygosity (>= 0.5)](./results/all_public_and_all_untwist_SNP_filtered_admixture_k8_barplot_IBS_hclust_version_0.5.pdf)
+
+![ADMIXTURE and genetic similarity dendrogram plot _after_ filtering out sites with high heterozygosity (>= 0.5)](./results/all_public_and_all_untwist_SNP_filtered_admixture_k8_barplot_IBS_hclust_version.pdf)
+
 
 # Methods, Data, and scientific plot availability
 
