@@ -37,7 +37,7 @@ from [1] (see [References](#references)).
 
 ### Material
 
-#### Merged public and Untwist resequencing genomic variant data ("Ata's data")
+#### Merged public and Untwist resequencing genomic variant data
 
 ##### The variant matrix (VCF)
 
@@ -76,6 +76,7 @@ To reproduce the results of this project execute the methods scripts as listed
 in `./job_queue.txt`. Find below the list reproduced with additional indication
 of which scripts can be executed in parallel - see number in square brackets
 for this information:
+
 * [1] `methods/filter_public_variants.sh`
 * [1] `methods/filter_untwist_variants.sh`
 * [2] `methods/merge_and_filter_public_and_untwist_vcfs.sh`

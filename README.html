@@ -1,0 +1,172 @@
+<h1 id="untwist">Untwist</h1>
+<p>Population genetics of the <em>Camelina sativa</em> lines studied in the “Untwist” project.</p>
+<h2 id="data-and-code-availability">Data and Code Availability</h2>
+<p>All code is contained in this git repository. Because the material (data) is contained in large files these cannot be included. Please write to the authors with affiliation to the Forschungszentrum Jülich (FZJ) to obtain the data files. For FZJ researches please look at the file <code>./material/data_and_code_availability.txt</code> for the physical directory in which to find the local copy of this repository <em>including</em> the material (data) files.</p>
+<h2 id="directory-structure">Directory structure</h2>
+<p>This project has the following directory structure:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="ex">-</span> material</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="ex">-</span> methods</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="ex">-</span> results</span></code></pre></div>
+<p>Note that most files in the directories <code>material</code> and <code>results</code> are ignored by git, because they contain sensitive data and/or extremely large files. You’ll find the files in the local clone, i.e. in the above directory on our IBG-4 cluster (see section <a href="#data-and-code-availability">Data and Code Availability</a>).</p>
+<h2 id="population-structure-analysis">Population Structure Analysis</h2>
+<p>In this section you find how we identified populations and assigned <em>Camelina sativa</em> lines studied in the Untwist research project to them. The respective genomes were either generated within the Untwist research project or extracted from [1] (see <a href="#references">References</a>).</p>
+<h3 id="material">Material</h3>
+<h4 id="merged-public-and-untwist-resequencing-genomic-variant-data-atas-data">Merged public and Untwist resequencing genomic variant data (“Ata’s data”)</h4>
+<h5 id="the-variant-matrix-vcf">The variant matrix (VCF)</h5>
+<p>In this population genetics analysis we used variants identified by the sequencing group. Those variants were filtered. We use only single nucleotide polymorphisms (SNPs) in the form of a variant matrix (VCF file). It is generated from two VCF input files, which have been generated and provided by the sequencing sub-group.</p>
+<p>The step-by-step generation is described in methods. The final VCF matrix used by all analysis is <code>./results/all_public_and_all_untwist_SNP_filtered.vcf.gz</code>.</p>
+<p>Two variant matrices are used that were generated for (a) public <em>Camelina sativa</em> lines (see reference [1]) and (b) lines generated within the Untwist research project. The files are in the FZJ’s <em>local</em> material directory and are available upon request. See <code>material/data_and_code_availability.txt</code> for details on their respective storage locations.</p>
+<pre><code>(a) NC_all_gatk_CAM_casom_CAMPUB223_54UNT.vcf
+(b) NC_all_gatk_UNT_check_all_reseq.vcf</code></pre>
+<p>Find a list of all <em>Camelina sativa</em> lines used in this population genetics analysis in the file <code>./material/untwist_lines_accessions.txt</code>. Note that at the time of carrying out the population genetics analysis a few lines were still underoing sequencing and thus are not present.</p>
+<h3 id="methods">Methods</h3>
+<p>This section describes step by step how the above material is processed to identify populations and assign accessions to them.</p>
+<h4 id="pipeline">Pipeline</h4>
+<p>To reproduce the results of this project execute the methods scripts as listed in <code>./job_queue.txt</code>. Find below the list reproduced with additional indication of which scripts can be executed in parallel - see number in square brackets for this information:</p>
+<ul>
+<li>[1] <code>methods/filter_public_variants.sh</code></li>
+<li>[1] <code>methods/filter_untwist_variants.sh</code></li>
+<li>[2] <code>methods/merge_and_filter_public_and_untwist_vcfs.sh</code></li>
+<li>[3] <code>methods/filter_out_SNPs_with_exceeding_heterzygosity.sh</code></li>
+<li>[4] <code>methods/filter_out_LD_correlated_SNPs.sh</code></li>
+<li>[5] <code>methods/principal_component_analysis.sh</code></li>
+<li>[5] <code>methods/generate_IBS_and_allele_count_distances.sh</code></li>
+<li>[5] <code>methods/generate_admixture_bed_input.sh</code></li>
+<li>[5] <code>methods/complete_linkage_clustering.sh</code></li>
+<li>[5] <code>methods/calculate_Fst.sh</code></li>
+<li>[6] <code>methods/k_means_clustering.R</code></li>
+<li>[6] <code>methods/ibs_allele_cnt_distance_clustering.R</code></li>
+<li>[6] <code>methods/admixture_k3.sh</code></li>
+<li>[6] <code>methods/admixture_k4.sh</code></li>
+<li>[6] <code>methods/admixture_k5.sh</code></li>
+<li>[6] <code>methods/admixture_k6.sh</code></li>
+<li>[6] <code>methods/admixture_k7.sh</code></li>
+<li>[6] <code>methods/admixture_k8.sh</code></li>
+<li>[6] <code>methods/admixture_k9.sh</code></li>
+<li>[6] <code>methods/admixture_k10.sh</code></li>
+<li>[7] <code>methods/admixture_plots.R</code></li>
+</ul>
+<h4 id="generation-of-the-variant-matrix-vcf-file">Generation of the variant matrix (VCF file)</h4>
+<p>See materials for the two input VCF matrix files provided by the sequencing subgroup.</p>
+<h5 id="filtering-out-low-quality-snps-and-other-variants">Filtering out low quality SNPs and other variants</h5>
+<p>The input variant matrices are filtered, so that the resulting variant matrices (VCF files) contain only desired <em>Camelina sativa</em> lines.</p>
+<p>For details see scripts:</p>
+<ul>
+<li><code>methods/filter_public_variants.sh</code></li>
+<li><code>methods/filter_untwist_variants.sh</code></li>
+</ul>
+<h5 id="merge-public-see-reference-1-and-untwist-variant-matrices-and-filter-the-result">Merge public (see reference [1]) and Untwist variant matrices and filter the result</h5>
+<p>The results of the two above filtering steps are merged into a single variant matrix (VCF file) and the resulting variant matrix is filtered again.</p>
+<p>The following statements are true for all retained variants: - all variants are SNPs - all SNPs are bi-allelic - all SNPs have less than 10% of the genotypes with missing data - all SNPs have a mapping depth of at least 3 - all SNPs have read quality score of at least 20 - all SNPs have at least minor allele frequency of 0.05</p>
+<p>See script <code>./methods/merge_and_filter_public_and_untwist_vcfs.sh</code> for details.</p>
+<p>This produces the variant matrix file: <code>./results/all_public_and_all_untwist_SNP_filtered_NOT_LD_pruned.vcf.gz</code> that holds <strong>2,306,926 SNPs</strong>.</p>
+<h5 id="filtering-out-sites-with-high-heterozygosity">Filtering out sites with high heterozygosity</h5>
+<p>Sites where more than 50% of the samples (accessions) are heterozygous are excluded from the variant matrix (VCF file) by this filtering step.</p>
+<p>We use <code>vcffilterjs</code> to carry out this filtering. See script</p>
+<pre><code>./methods/filter_out_SNPs_with_exceeding_heterzygosity.sh</code></pre>
+<p>This step produces the VCF file <code>./results/all_public_and_all_untwist_SNP_filtered_heterozygosity_NOT_LD_pruned.vcf.gz</code> which contains <strong>1,286,444 SNPs</strong>.</p>
+<h6 id="alternative-method-to-filter-out-sites-with-exceeding-heterozygosity">Alternative method to filter out sites with exceeding heterozygosity</h6>
+<p>An alternative method using <code>bcftools</code> is implemented in the following ShellScript: <code>./methods/filter_for_low_heterozygosity.sh</code></p>
+<p>It produces the output: <code>./results/all_public_and_all_untwist_SNP_filtered_heterozygosity_bcf_NOT_LD_pruned.vcf.gz</code>.</p>
+<h5 id="filtering-out-correlated-snps">Filtering out correlated SNPs</h5>
+<p>Linkage disequilibrium (LD) is a population-based parameter that describes the degree to which an allele of one genetic variant is inherited or correlated with an allele of a nearby genetic variant within a given population (Bush and Moore, 2012).</p>
+<p>Such linked SNPs can bias population structure analyses. Thus we need to filter out SNPs that are highly correlated.</p>
+<p>See script <code>./methods/filter_out_LD_correlated_SNPs.sh</code> for details on how <code>bcftools</code> (version 1.9) was used to filter out SNPs correlated to other positions with an <code>r^2 &gt; 0.9</code> within a window of size 10,000 bp.</p>
+<p>After filtering <strong>340,696 SNPs</strong> remained. The result is stored in file <code>./results/all_public_and_all_untwist_SNP_filtered.vcf.gz</code>.</p>
+<h5 id="differences-of-our-marker-site-filtering-to-li-et-al.1">Differences of our marker (site) filtering to Li et al.[1]</h5>
+<p>Li et al [1] used the following filters for SNP sites: - retain biallelic SNPs, - with missing data &lt;10%, - and heterozygosity &lt;0.5, - linkage disequilibrium (LD) r^2 &lt; 0.4, - allele frequencies (MAF) &gt;0.1.</p>
+<p>We used a minor allele frequency cutoff value of 0.05 and also retained markers where the r^2 was &lt;= 0.9.</p>
+<h4 id="complete-linkage-clustering-based-on-identity-by-state-ibs-distances">Complete Linkage Clustering based on identity by state (IBS) distances</h4>
+<p>See the script <code>./methods/complete_linkage_clustering.sh</code> which was submitted to our job-queue.</p>
+<p>This step produces the following result files:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="ex">./results/all_public_and_all_untwist_SNP_filtered_complete_linkage_clustering.cluster1</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="ex">./results/all_public_and_all_untwist_SNP_filtered_complete_linkage_clustering.cluster2</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="ex">./results/all_public_and_all_untwist_SNP_filtered_complete_linkage_clustering.cluster3</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="ex">./results/all_public_and_all_untwist_SNP_filtered_complete_linkage_clustering.log</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="ex">./results/all_public_and_all_untwist_SNP_filtered_complete_linkage_clustering.nosex</span></span></code></pre></div>
+<p>Note that the clusters are contained in file <code>...cluster1</code>, one cluster per line separated by the cluster name a <code>&lt;TAB&gt;</code> and the cluster members comma separated.</p>
+<h4 id="identity-by-state-ibs-distance-based-hierarchical-clustering">Identity by state (IBS) distance based hierarchical clustering</h4>
+<p>IBS is a standard distance measure between two accessions. We use <code>plink</code> (version 1.9) to compute the square distance matrix. This is done in script <code>methods/generate_IBS_and_allele_count_distances.sh</code>, which was submitted to our job-queue using <code>qsub</code>.</p>
+<p>This step produces:</p>
+<pre><code>./results/all_public_and_all_untwist_SNP_filtered.mdist
+./results/all_public_and_all_untwist_SNP_filtered.mdist.id
+./results/all_public_and_all_untwist_SNP_filtered.dist
+./results/all_public_and_all_untwist_SNP_filtered.dist.id</code></pre>
+<p>Note, that the <code>[...].dist</code> files contain the allele count based distance and row names (<code>[...].dist.id</code>) information. The <code>[...].mdist</code> and <code>[...].mdist.id</code> files contain the same but for IBS distances.</p>
+<p>The hierarchical clustering and visualization is done with the R-script <code>./methods/ibs_allele_cnt_distance_clustering.R</code>. It produces these results:</p>
+<pre><code>./results/hclust_on_1_min_IBS_tree.pdf
+./results/hclust_on_allele_cnts_tree.pdf</code></pre>
+<p>Note that the respective dendrograms are stored in Newick format in the following files:</p>
+<pre><code>./results/hclust_on_1_min_IBS_tree.newick
+./results/hclust_on_allele_cnts_tree.newick</code></pre>
+<h4 id="principal-component-analysis">Principal Component Analysis</h4>
+<p>We use <code>plink</code> (version 1.9) to carry out a principal component analysis of the SNP variants.</p>
+<p>Find the <code>plink</code> instructions in File <code>./methods/principal_component_analysis.sh</code>. Submitted to our job-queue with <code>qsub</code>.</p>
+<p>This step produces:</p>
+<pre><code>./results/all_public_and_all_untwist_SNP_filtered_pca.eigenval
+./results/all_public_and_all_untwist_SNP_filtered_pca.eigenvec
+./results/all_public_and_all_untwist_SNP_filtered_pca.eigenvec.var
+./results/all_public_and_all_untwist_SNP_filtered_pca.log
+./results/all_public_and_all_untwist_SNP_filtered_pca.nosex
+./results/all_public_and_all_untwist_SNP_filtered_pca.rel
+./results/all_public_and_all_untwist_SNP_filtered_pca.rel.id</code></pre>
+<p>Note that the matrix accession eigenvectors is stored in <code>./results/all_public_and_all_untwist_SNP_filtered_pca.eigenvec</code>.</p>
+<h5 id="plot-the-pca-results">Plot the PCA results</h5>
+<p>We use R to generate a scatterplot to visualize the results of the SNP based principal component analysis. Use the R-script <code>./methods/visualize_pca_results.R</code> for this. The resulting plot is stored in <code>./results/principal_component_scatterplot.pdf</code>.</p>
+<h6 id="convert-plots-to-jpg-for-the-publication">Convert plots to JPG for the publication</h6>
+<p>Upon request we convert the PCA plot to JPG for publication using the following command:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="ex">convert</span> -density 600 -trim <span class="kw">\</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>  <span class="ex">results/principal_component_scatterplot.pdf</span> <span class="kw">\</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>  <span class="ex">-quality</span> 100 results/principal_component_scatterplot.jpg</span></code></pre></div>
+<h5 id="k-means-clustering">k-means clustering</h5>
+<p>k-means clustering was executed in <code>R</code> using the script <code>methods/k_means_clustering.R</code>.</p>
+<p>The best number of clusters was found using the elbow and the silhouette methods (see the respective plots).</p>
+<p>Currently, this produces just plots, as the results hint that the original input data needs refinement.</p>
+<p>Tables listing the <code>Accession</code> identifiers in the first column and the cluster number that accession belongs to in the second have been saved to:</p>
+<pre><code>./results/k_means_result_k=3.tsv
+[...]
+./results/k_means_result_k=10.tsv</code></pre>
+<h4 id="admixture-analysis">ADMIXTURE analysis</h4>
+<p>ADMIXTURE identifies the proportions of each accession’s genome belonging to a certain sub-population. The number of populations has to be defined as an input parameter.</p>
+<h5 id="prepare-input-for-admixture">Prepare input for ADMIXTURE</h5>
+<p>ADMIXTURE requires a certain input format (a <code>bed</code> file). Using <code>plink</code> it can be produced from the input variant matrix in <code>VCF</code> format.</p>
+<p>The script to do this conversion is <code>./methods/generate_admixture_bed_input.sh</code>. It was submitted to our job-queue with the standard <code>qsub</code> command.</p>
+<h5 id="run-admixture-for-different-assumed-numbers-of-populations-k">Run ADMIXTURE for different assumed numbers of populations (<em>k</em>)</h5>
+<p>For each <em>k</em> there is a single ADMIXTURE script that was submitted to our job-queue using <code>qsub</code>. All of these scripts are identical, except the <em>k</em> parameter.</p>
+<p>We used values <code>3,4,...,10</code> for <em>k</em>.</p>
+<p>See, for example, <code>./methods/admixture_k3.sh</code>, which produces the results:</p>
+<pre><code>./results/all_public_and_all_untwist_SNP_filtered.3.P
+./results/all_public_and_all_untwist_SNP_filtered.3.Q
+./results/all_public_and_all_untwist_SNP_filtered_admixture_k3.out
+./results/all_public_and_all_untwist_SNP_filtered_admixture_k3.cv.error</code></pre>
+<p>Note, that the above four result files are created for each <em>k</em>. The ones listed above are for <em>k</em>=3.</p>
+<h5 id="plot-admixture-results">Plot ADMIXTURE results</h5>
+<p>See script <code>./methods/admixture_plots.R</code>. It produces the following plots:</p>
+<pre><code>results/all_public_and_all_untwist_SNP_filtered_admixture_k3_barplot_IBS_hclust.pdf
+results/all_public_and_all_untwist_SNP_filtered_admixture_k4_barplot_IBS_hclust.pdf
+results/all_public_and_all_untwist_SNP_filtered_admixture_k5_barplot_IBS_hclust.pdf
+results/all_public_and_all_untwist_SNP_filtered_admixture_k6_barplot_IBS_hclust.pdf
+[...]</code></pre>
+<p>Note that in each of these plots a hierarchical clustering tree is aligned with a typical Admixture barplot.</p>
+<p>The ADMIXTURE results are saved as tables, where the first column is the accession identifier and the later columns hold the respective accession genomes’ percentage coming from the column ancestor population:</p>
+<pre><code>results/all_public_and_all_untwist_SNP_filtered_admixture_k3_result_table.tsv
+results/all_public_and_all_untwist_SNP_filtered_admixture_k4_result_table.tsv
+results/all_public_and_all_untwist_SNP_filtered_admixture_k5_result_table.tsv
+results/all_public_and_all_untwist_SNP_filtered_admixture_k6_result_table.tsv
+[...]</code></pre>
+<p>The script generates a scatter plot of the cross validation error (y-axis) depending on the assumed number of populations <em>k</em> (x-axis): <code>./results/all_public_and_all_untwist_SNP_filtered_admixture_cv_error_scatter_plot.pdf</code></p>
+<h6 id="provide-the-dendrograms-in-newick-format">Provide the dendrograms in Newick format</h6>
+<p>The above script <code>./methods/admixture_plots.R</code> produces two trees (dendrograms) as output per paramater value for <code>k</code>. These dendrograms have been requested for further figures for the publication. The first dendrogram includes <em>all</em> lines analyzed in this project, the second only the Untwist lines. The leaves are sorted to match the admixture clusters. As topology identity is concerned they are <em>all</em> identical.</p>
+<p>For <em>k</em> = 8 the resulting respective dendrograms are: - <code>./results/all_public_and_all_untwist_SNP_filtered_admixture_k8_JUST_IBS_hclust.newick</code> and - <code>./results/all_public_and_all_untwist_SNP_filtered_admixture_k8_JUST_IBS_hclust_ONLY_Untwist_Lines.newick</code></p>
+<h6 id="convert-plots-to-jpg-for-the-publication-1">Convert plots to JPG for the publication</h6>
+<p>Upon request we convert the above <code>*admixture_k*_barplot_IBS_hclust.pdf</code> to JPG using the following command:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="ex">convert</span> -density 600 -trim <span class="kw">\</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>  <span class="ex">results/all_public_and_all_untwist_SNP_filtered_admixture_k8_barplot_IBS_hclust.pdf</span> <span class="kw">\</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a>  <span class="ex">-quality</span> 100 results/all_public_and_all_untwist_SNP_filtered_admixture_k8_barplot_IBS_hclust.jpg</span></code></pre></div>
+<h4 id="calculate-the-f-statistics">Calculate the F-statistics</h4>
+<p>F-statistics and their calculation has been well defined in “Weir BS, Cockerham CC (1984) Estimating F-statistics for the analysis of population structure”. vcftools implement this method.</p>
+<p>We want to infer whether the genetic variability of the Untwist lines matches the variability of the public lines.</p>
+<p>In order to achieve this, we calculate the F-statistics using vcftools.</p>
+<p>See file <code>./methods/calculate_Fst.sh</code> for details. The job creates the output file <code>./results/mean_Fst.txt</code>.</p>
+<h2 id="references">References</h2>
+<p>[1] Li, H., Hu, X., Lovell, J. T., Grabowski, P. P., Mamidi, S., Chen, C., Amirebrahimi, M., Kahanda, I., Mumey, B., Barry, K., Kudrna, D., Schmutz, J., Lachowiec, J., &amp; Lu, C. (2021). Genetic dissection of natural variation in oilseed traits of camelina by whole-genome resequencing and QTL mapping. The Plant Genome, 14(2), e20110. https://doi.org/10.1002/tpg2.20110</p>
