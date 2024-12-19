@@ -62,7 +62,7 @@ our population genetics analysis. Thus, all _not_ listed below are confirmed.
 # Conclusion
 
 The a-priori knowledge about genetic similarity between Camelina lines studied
-in this population genetics assay can largely be confirmed (75 %), with three
+in this population genetics assay can largely be confirmed (75 %), with four
 exceptions. The line "UNT51" was not part of the population genetics analysis
 due to missing data. Furthermore the suspected ("likely") identity of "UNT27"
 likely being "CAM174" could not be confirmed, neither by the identity by state
